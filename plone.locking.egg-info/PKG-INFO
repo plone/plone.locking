@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: plone.locking
+Version: 0.1dev
+Summary: webdav locking support
+Home-page: http://svn.plone.org/svn/plone/plone.locking
+Author: Raphael Ritz, Jeff Roche, Martin Aspeli and others
+Author-email: plone-developers@lists.sourceforge.net
+License: LGPL
+Description: UNKNOWN
+Keywords: locking webdav plone archetypes
+Platform: UNKNOWN

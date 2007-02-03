@@ -47,10 +47,12 @@ class LockingInformation(BrowserView):
         current user is not the lock owner)
         """
         lockable = ILockable(aq_inner(self.context))
-        # return lockable.locked() and not lockable.can_safely_unlock()
+        
         # Faster version - we rely on the fact that can_safely_unlock() is
         # True even if the object is not locked
+        
         return not lockable.can_safely_unlock()
+        # return lockable.locked() and not lockable.can_safely_unlock()
         
     def lock_is_stealable(self):
         """Find out if the lock is stealable
@@ -78,6 +80,8 @@ class LockingInformation(BrowserView):
         for info in lockable.lock_info():
             creator = info['creator']
             time = info['time']
+            token = info['token']
+            lock_type = info['type']
             author_page = "%s/author/%s" % (url, creator)
             member = portal_membership.getMemberById(creator)
             if member:
@@ -91,6 +95,8 @@ class LockingInformation(BrowserView):
                 'author_page'     : author_page,
                 'time'            : time,
                 'time_difference' : time_difference,
+                'token'           : token,
+                'type'            : lock_type,
             }
 
     def _getNiceTimeDifference(self, baseTime):

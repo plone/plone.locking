@@ -129,3 +129,76 @@ Another user is not, and unlock() has no effect.
     >>> lockable.unlock()
     >>> lockable.locked()
     True
+    
+    >>> from zope.interface import noLongerProvides
+    >>> noLongerProvides(obj, INonStealableLock)
+    >>> lockable.clear_locks()
+    >>> lockable.locked()
+    False
+
+Categorised locks
+-----------------
+
+So far, we have been managing a single type of lock. However, it is possible
+to manage different types of locks which are mutually exclusive. For example,
+if a particular type of lock is applied, it cannot be stolen by a user who
+is attempting to create another type of lock.
+
+Consider the default type of lock:
+
+    >>> from plone.locking.interfaces import STEALABLE_LOCK
+
+This is simply a string that represents the default "stealable" locks. Let's
+consider a check-in/check-out stating system that needs to lock the baseline
+copy of an object when a working copy is checked out:
+
+    >>> from plone.locking.interfaces import LockType
+    >>> COCI_LOCK = LockType(u'coci.lock', stealable=False, user_unlockable=False)
+    
+This is a very restrictive lock - it cannot be stolen or unlocked by the
+user. If we lock with this lock type, no-one can steal or safely unlock
+the object, regardless of lock type.
+
+    >>> lockable.lock(COCI_LOCK)
+    >>> lockable.locked()
+    True
+    
+    >>> lockable.can_safely_unlock()
+    False
+    >>> lockable.can_safely_unlock(COCI_LOCK)
+    False
+    
+    >>> lockable.stealable()
+    False
+    >>> lockable.stealable(COCI_LOCK)
+    False
+    
+    >>> lockable.unlock(COCI_LOCK)
+    >>> lockable.locked()
+    False
+    
+Now consider a lock that is stealable, but distinct from the regular stealable
+lock. In this case, code managing one type of lock cannot steal locks or 
+safely unlock objects locked with the other:
+
+    >>> SPECIAL_LOCK = LockType(u'special.lock', stealable=True, user_unlockable=True)
+    >>> lockable.lock(SPECIAL_LOCK)
+    >>> lockable.locked()
+    True
+    
+    >>> lockable.can_safely_unlock()
+    False
+    >>> lockable.can_safely_unlock(SPECIAL_LOCK)
+    True
+    
+    >>> lockable.stealable()
+    False
+    >>> lockable.stealable(SPECIAL_LOCK)
+    True
+    
+    >>> lockable.unlock()
+    >>> lockable.locked()
+    True
+    >>> lockable.unlock(SPECIAL_LOCK)
+    >>> lockable.locked()
+    False

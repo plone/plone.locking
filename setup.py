@@ -1,12 +1,16 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.1'
+version = '1.0a3'
 
 setup(name='plone.locking',
       version=version,
       description="webdav locking support",
       long_description="""\
+plone.locking provides WebDAV locking support, with useful abstractions and
+views to assist a user interface. By default, it provides "stealable" locks,
+but can support other lock types. It is used by Plone, Archetypes and
+plone.app.iterate.
 """,
       classifiers=[], # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       keywords='locking webdav plone archetypes',

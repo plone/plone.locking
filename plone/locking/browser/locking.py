@@ -38,7 +38,7 @@ class LockingInformation(BrowserView):
     """Lock information
     """
 
-    def is_locked (self):
+    def is_locked(self):
         lockable = ILockable(aq_inner(self.context))
         return lockable.locked()
 

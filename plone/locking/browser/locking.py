@@ -1,10 +1,8 @@
 from zope.component import getMultiAdapter
-from zope.component import getUtility
 
 from Acquisition import aq_inner
 from Products.Five import BrowserView
-from Products.CMFCore.interfaces import IMembershipTool
-from Products.CMFCore.interfaces import IURLTool
+from Products.CMFCore.utils import getToolByName
 
 from DateTime import DateTime
 from datetime import timedelta
@@ -71,8 +69,8 @@ class LockingInformation(BrowserView):
         acquired.
         """
         
-        portal_membership = getUtility(IMembershipTool)
-        portal_url = getUtility(IURLTool)
+        portal_membership = getToolByName(self.context, 'portal_membership')
+        portal_url = getToolByName(self.context, 'portal_url')
         
         lockable = ILockable(aq_inner(self.context))    
         url = portal_url()

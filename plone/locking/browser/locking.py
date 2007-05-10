@@ -1,4 +1,3 @@
-from zope.component import getMultiAdapter
 
 from Acquisition import aq_inner
 from Products.Five import BrowserView
@@ -12,10 +11,10 @@ from plone.locking.interfaces import ILockable
 class LockingOperations(BrowserView):
     """Lock acquisition and stealing operations
     """
-            
+
     def force_unlock(self, redirect=True):
         """Steal the lock.
-        
+
         If redirect is True, redirect back to the context URL, i.e. reload
         the page.
         """
@@ -27,11 +26,10 @@ class LockingOperations(BrowserView):
     def safe_unlock(self):
         """Unlock the object if the current user has the lock
         """
-        info = getMultiAdapter((self.context, self.request), name='plone_lock_info')
-        if info.can_safely_unlock():
-            lockable = ILockable(self.context)
+        lockable = ILockable(self.context)
+        if lockable.can_safely_unlock():
             lockable.unlock()
-            
+
 class LockingInformation(BrowserView):
     """Lock information
     """
@@ -45,36 +43,32 @@ class LockingInformation(BrowserView):
         current user is not the lock owner)
         """
         lockable = ILockable(aq_inner(self.context))
-        
         # Faster version - we rely on the fact that can_safely_unlock() is
         # True even if the object is not locked
-        
         return not lockable.can_safely_unlock()
         # return lockable.locked() and not lockable.can_safely_unlock()
-        
+
     def lock_is_stealable(self):
         """Find out if the lock is stealable
         """
         lockable = ILockable(self.context)
         return lockable.stealable()
-        
+
     def lock_info(self):
         """Get information about the current lock, a dict containing:
-        
+
         creator - the id of the user who created the lock
         fullname - the full name of the lock creator
         author_page - a link to the home page of the author
         time - the creation time of the lock
-        time_difference - a string representing the time since the lock was 
+        time_difference - a string representing the time since the lock was
         acquired.
         """
-        
+
         portal_membership = getToolByName(self.context, 'portal_membership')
         portal_url = getToolByName(self.context, 'portal_url')
-        
-        lockable = ILockable(aq_inner(self.context))    
+        lockable = ILockable(aq_inner(self.context))
         url = portal_url()
-            
         for info in lockable.lock_info():
             creator = info['creator']
             time = info['time']
@@ -84,9 +78,9 @@ class LockingInformation(BrowserView):
             member = portal_membership.getMemberById(creator)
             if member:
                 fullname = member.getProperty('fullname', None) or creator
-                    
+
             time_difference = self._getNiceTimeDifference(time)
-                    
+
             return {
                 'creator'         : creator,
                 'fullname'        : fullname,
@@ -104,7 +98,7 @@ class LockingInformation(BrowserView):
         days = delta.days
         hours = int(delta.seconds / 3600)
         minutes = (delta.seconds - (hours * 3600)) /60
-        
+
         dateString = ""
         if days == 0:
             if hours == 0:

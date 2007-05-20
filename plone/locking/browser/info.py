@@ -31,10 +31,7 @@ class LockInfoViewlet(BrowserView):
         pass
 
     def render(self):
-        if not self.info.is_locked_for_current_user():
-            return ""
-        else:
-            return self.template()
+        return self.template()
     
     def lock_is_stealable(self):
         return self.info.lock_is_stealable()

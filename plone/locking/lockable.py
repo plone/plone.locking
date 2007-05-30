@@ -68,7 +68,8 @@ class TTWLockable(object):
         userid = getSecurityManager().getUser().getId()
         for l in info:
             # There is another lock of a different type
-            if l['type'].__name__ != lock_type.__name__:
+            if not hasattr(l['type'], '__name__') or \
+               l['type'].__name__ != lock_type.__name__:
                 return False
             # The lock is in fact held by the current user
             if l['creator'] == userid:
@@ -81,7 +82,8 @@ class TTWLockable(object):
             return False
         # Can't steal locks of a different type
         for l in self.lock_info():
-            if l['type'].__name__ != lock_type.__name__:
+            if not hasattr(l['type'], '__name__') or \
+               l['type'].__name__ != lock_type.__name__:
                 return False
         # The lock type is stealable, and the object is not marked as 
         # non-stelaable, so return True

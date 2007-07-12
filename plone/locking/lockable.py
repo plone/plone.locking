@@ -24,9 +24,8 @@ class TTWLockable(object):
 
     def __init__(self, context):
         self.context = context
-        annotations = IAnnotations(self.context)
-        self.locks = annotations.setdefault(ANNOTATION_KEY, PersistentDict())
-
+        self.__locks = None
+        
     def lock(self, lock_type=STEALABLE_LOCK, children=False):
         if not self.locked():
             user = getSecurityManager().getUser()
@@ -35,7 +34,7 @@ class TTWLockable(object):
             token = lock.getLockToken()
             self.context.wl_setLock(token, lock)
 
-            self.locks[lock_type.__name__] = dict(type = lock_type,
+            self._locks()[lock_type.__name__] = dict(type = lock_type,
                                                   token = token)
 
     def unlock(self, lock_type=STEALABLE_LOCK, stealable_only=True):
@@ -44,14 +43,14 @@ class TTWLockable(object):
 
         if not lock_type.stealable or not stealable_only \
            or self.stealable(lock_type):
-            key = self.locks.get(lock_type.__name__, None)
+            key = self._locks().get(lock_type.__name__, None)
             if key:
                 self.context.wl_delLock(key['token'])
-                del self.locks[lock_type.__name__]
+                del self._locks()[lock_type.__name__]
 
     def clear_locks(self):
         self.context.wl_clearLocks()
-        self.locks.clear()
+        self._locks().clear()
 
     def locked(self):
         return bool(self.context.wl_isLocked())
@@ -95,7 +94,7 @@ class TTWLockable(object):
 
     def lock_info(self):
         info = []
-        rtokens = dict([(v['token'], v['type']) for v in self.locks.values()])
+        rtokens = dict([(v['token'], v['type']) for v in self._locks(False).values()])
         for lock in self.context.wl_lockValues(1):
             if not lock.isValid():
                 continue # Skip invalid/expired locks
@@ -107,3 +106,17 @@ class TTWLockable(object):
                 'type'    : rtokens.get(token, None),
             })
         return info
+
+    def _locks(self, create=True):
+        if self.__locks is not None:
+            return self.__locks
+
+        annotations = IAnnotations(self.context)
+        locks = annotations.get(ANNOTATION_KEY, None)
+        if locks is None and create:
+            locks = annotations.setdefault(ANNOTATION_KEY, PersistentDict())
+        if locks is not None:
+            self.__locks = locks
+            return self.__locks
+        else:
+            return {}

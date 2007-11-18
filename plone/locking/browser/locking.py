@@ -76,6 +76,7 @@ class LockingInformation(BrowserView):
             lock_type = info['type']
             author_page = "%s/author/%s" % (url, creator)
             member = portal_membership.getMemberById(creator)
+            fullname = ''
             if member:
                 fullname = member.getProperty('fullname', None) or creator
 

@@ -202,3 +202,22 @@ safely unlock objects locked with the other:
     >>> lockable.unlock(SPECIAL_LOCK)
     >>> lockable.locked()
     False
+
+
+Anonymous locking
+=================
+
+When we are anonymous but do have edit rights we can also do a lock.
+
+   >>> self.logout()
+   >>> lockable.lock()
+   >>> lockable.locked()
+   True
+
+   >>> info = lockable.lock_info()
+   >>> len(info)
+   1
+   >>> info[0]['time'] > 0
+   True
+   >>> info[0]['creator']
+   'anonymous'

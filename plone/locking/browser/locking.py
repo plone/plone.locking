@@ -74,13 +74,15 @@ class LockingInformation(BrowserView):
             time = info['time']
             token = info['token']
             lock_type = info['type']
-            author_page = "%s/author/%s" % (url, creator)
             # Get the fullname, but remember that the creator may not
             # be a member, but only Authenticated or even anonymous.
+            # Same for the author_page
             fullname = ''
+            author_page = ''
             member = portal_membership.getMemberById(creator)
             if member:
                 fullname = member.getProperty('fullname', '')
+                author_page = "%s/author/%s" % (url, creator)
             if fullname == '':
                 fullname = creator
 

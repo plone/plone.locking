@@ -11,8 +11,12 @@
         <dt>Locked</dt>
         <dd>This item was locked by 
             <a i18n:name="author"
+               tal:condition="lock_details/author_page"
                tal:content="lock_details/fullname"
                tal:attributes="href lock_details/author_page" />
+            <span i18n:name="author"
+                  tal:condition="not:lock_details/author_page"
+                  tal:content="lock_details/fullname" />
             <span i18n:name="time"
                tal:content="lock_details/time_difference" /> ago.
         </dd>
@@ -25,8 +29,12 @@
             <dt>Locked</dt>
             <dd>This item was locked by
                 <a i18n:name="author"
+                   tal:condition="lock_details/author_page"
                    tal:content="lock_details/fullname"
                    tal:attributes="href lock_details/author_page" />
+                <span i18n:name="author"
+                      tal:condition="not:lock_details/author_page"
+                      tal:content="lock_details/fullname" />
                 <span i18n:name="time"
                    tal:content="lock_details/time_difference" /> ago.
             If you are certain this user has abandoned the object, you

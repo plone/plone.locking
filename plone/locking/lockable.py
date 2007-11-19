@@ -64,7 +64,7 @@ class TTWLockable(object):
         if len(info) == 0:
             return True
 
-        userid = getSecurityManager().getUser().getId() or 'anonymous'
+        userid = getSecurityManager().getUser().getId() or None
         for l in info:
             # There is another lock of a different type
             if not hasattr(l['type'], '__name__') or \
@@ -100,12 +100,11 @@ class TTWLockable(object):
                 continue # Skip invalid/expired locks
             token = lock.getLockToken()
             creator = lock.getCreator()
-            if creator is None:
-                userid = 'anonymous'
-            else:
-                userid = creator[1]
+            # creator can be None when locked by an anonymous user
+            if creator is not None:
+                creator = creator[1]
             info.append({
-                'creator' : userid,
+                'creator' : creator,
                 'time'    : lock.getModifiedTime(),
                 'token'   : token,
                 'type'    : rtokens.get(token, None),

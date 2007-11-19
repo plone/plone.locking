@@ -7,6 +7,7 @@ from DateTime import DateTime
 from datetime import timedelta
 
 from plone.locking.interfaces import ILockable
+from Products.CMFPlone import PloneMessageFactory as _
 
 class LockingOperations(BrowserView):
     """Lock acquisition and stealing operations
@@ -84,8 +85,8 @@ class LockingInformation(BrowserView):
                 fullname = member.getProperty('fullname', '')
                 author_page = "%s/author/%s" % (url, creator)
             if fullname == '':
-                fullname = creator
-
+                fullname = creator or _('label_an_anonymous_user',
+                                        u'an anonymous user')
             time_difference = self._getNiceTimeDifference(time)
 
             return {

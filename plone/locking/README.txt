@@ -219,5 +219,6 @@ When we are anonymous but do have edit rights we can also do a lock.
    1
    >>> info[0]['time'] > 0
    True
-   >>> info[0]['creator']
-   'anonymous'
+   >>> info[0]['creator'] is None
+   True
+

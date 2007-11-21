@@ -6,7 +6,7 @@ from persistent.dict import PersistentDict
 from zope.annotation.interfaces import IAnnotations
 
 from AccessControl import getSecurityManager
-from webdav.LockItem import LockItem
+from webdav.LockItem import LockItem, MAXTIMEOUT
 
 from plone.locking.interfaces import ILockable
 from plone.locking.interfaces import INonStealableLock
@@ -30,7 +30,7 @@ class TTWLockable(object):
         if not self.locked():
             user = getSecurityManager().getUser()
             depth = children and 'infinity' or 0
-            lock = LockItem(user, depth=depth)
+            lock = LockItem(user, depth=depth, timeout=MAXTIMEOUT)
             token = lock.getLockToken()
             self.context.wl_setLock(token, lock)
 

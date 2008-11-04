@@ -107,20 +107,20 @@ class LockingInformation(BrowserView):
         hours = int(delta.seconds / 3600)
         minutes = (delta.seconds - (hours * 3600)) /60
 
-        dateString = ""
+        dateString = u""
         if days == 0:
             if hours == 0:
                 if delta.seconds < 120:
-                    dateString = "1 minute"
+                    dateString = _(u"1 minute")
                 else:
-                    dateString = "%s minutes" % minutes
+                    dateString = _(u"$m minutes", mapping={'m': minutes})
             elif hours == 1:
-                dateString = "%s hour and %s minutes" % (hours, minutes)
+                dateString = _(u"$h hour and $m minutes", mapping={'h': hours, 'm': minutes})
             else:
-                dateString = "%s hours and %s minutes" % (hours, minutes)
+                dateString = _(u"$h hours and $m minutes", mapping={'h': hours, 'm': minutes})
         else:
             if days == 1:
-                dateString = "%s day and %s hours" % (days, hours)
+                dateString = _(u"$d day and $h hours", mapping={'d': days, 'h': hours})
             else:
-                dateString = "%s days and %s hours" % (days, hours)
+                dateString = _(u"$d days and $h hours", mapping={'d': days, 'h': hours})
         return dateString

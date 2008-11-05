@@ -2,6 +2,9 @@ Changelog for plone.locking
 
     (name of developer listed in brackets)
 
+     - Fix missing internationnalization (#8609 thanks to Vincent Fretin)
+       [encolpe]
+
 plone.locking - 1.0.5
 
      - Fix lock timeout which was set by default to 12 minutes, it is

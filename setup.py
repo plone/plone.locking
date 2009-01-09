@@ -12,20 +12,29 @@ views to assist a user interface. By default, it provides "stealable" locks,
 but can support other lock types. It is used by Plone, Archetypes and
 plone.app.iterate.
 """,
-      classifiers=[], # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
+      classifiers=[],
       keywords='locking webdav plone archetypes',
       author='Raphael Ritz, Jeff Roche, Martin Aspeli and others',
       author_email='plone-developers@lists.sourceforge.net',
       url='http://svn.plone.org/svn/plone/plone.locking',
-      license='LGPL',
+      license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['plone'],
       include_package_data=True,
       zip_safe=False,
       install_requires=[
         'setuptools',
+        'ZODB3',
+        'zope.annotation',
+        'zope.component',
+        'zope.interface',
+        'zope.schema',
+        'zope.viewlet',
+        'Plone',
+        'Products.Archetypes',
+        'Products.PloneTestCase',
+        # 'Acquisition',
+        # 'DateTime',
+        # 'Zope2',
       ],
-      entry_points="""
-      # -*- Entry points: -*-
-      """,
       )

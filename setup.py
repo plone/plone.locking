@@ -22,17 +22,21 @@ plone.app.iterate.
       namespace_packages=['plone'],
       include_package_data=True,
       zip_safe=False,
+      extras_require=dict(
+        test=[
+            'Products.Archetypes',
+            'Products.PloneTestCase',
+        ]
+      ),
       install_requires=[
         'setuptools',
         'ZODB3',
         'zope.annotation',
         'zope.component',
+        'zope.i18nmessageid',
         'zope.interface',
         'zope.schema',
         'zope.viewlet',
-        'Plone',
-        'Products.Archetypes',
-        'Products.PloneTestCase',
         # 'Acquisition',
         # 'DateTime',
         # 'Zope2',

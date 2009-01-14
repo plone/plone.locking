@@ -4,6 +4,9 @@ Changelog for plone.locking
 
 plone.locking - 1.0.6
 
+- Declare test dependencies in an extra. Avoid dependency on Plone.
+  [hannosch]
+
 - Specify package dependencies.
   [hannosch]
 

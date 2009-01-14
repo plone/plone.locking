@@ -7,7 +7,10 @@ from DateTime import DateTime
 from datetime import timedelta
 
 from plone.locking.interfaces import ILockable
-from Products.CMFPlone import PloneMessageFactory as _
+from zope.i18nmessageid import MessageFactory
+
+_ = MessageFactory('plone')
+
 
 class LockingOperations(BrowserView):
     """Lock acquisition and stealing operations

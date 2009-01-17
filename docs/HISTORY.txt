@@ -2,7 +2,7 @@ Changelog for plone.locking
 
     (name of developer listed in brackets)
 
-plone.locking - 1.0.6
+plone.locking - 2.0
 
 - Declare test dependencies in an extra. Avoid dependency on Plone.
   [hannosch]
@@ -10,7 +10,7 @@ plone.locking - 1.0.6
 - Specify package dependencies.
   [hannosch]
 
-- Fix missing internationnalization (#8609 thanks to Vincent Fretin)
+- Fix missing internationalization (#8609 thanks to Vincent Fretin)
   [encolpe]
 
 plone.locking - 1.0.5

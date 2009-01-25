@@ -4,6 +4,9 @@ Changelog for plone.locking
 
 plone.locking - 2.0
 
+- Clarified license and copyright statements.
+  [hannosch]
+
 - Declare test dependencies in an extra. Avoid dependency on Plone.
   [hannosch]
 

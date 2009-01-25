@@ -1,4 +1,4 @@
-  plone.locking is copyright Raphael Ritz, Jeff Roche, Martin Aspeli and others
+  plone.locking is copyright Plone Foundation
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by

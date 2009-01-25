@@ -12,9 +12,16 @@ views to assist a user interface. By default, it provides "stealable" locks,
 but can support other lock types. It is used by Plone, Archetypes and
 plone.app.iterate.
 """,
-      classifiers=[],
+      classifiers=[
+          "Environment :: Web Environment",
+          "Framework :: Plone",
+          "Framework :: Zope2",
+          "License :: OSI Approved :: GNU General Public License (GPL)",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python",
+        ],
       keywords='locking webdav plone archetypes',
-      author='Raphael Ritz, Jeff Roche, Martin Aspeli and others',
+      author='Plone Foundation',
       author_email='plone-developers@lists.sourceforge.net',
       url='http://svn.plone.org/svn/plone/plone.locking',
       license='GPL',

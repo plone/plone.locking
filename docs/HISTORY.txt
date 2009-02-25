@@ -2,7 +2,7 @@ Changelog for plone.locking
 
     (name of developer listed in brackets)
 
-plone.locking - 2.0
+plone.locking - 1.1.0 (unreleased)
 
 - Clarified license and copyright statements.
   [hannosch]

@@ -1,4 +1,4 @@
-from zope.interface import implements, Interface
+from zope.interface import implements, Interface, Attribute
 from zope.annotation.interfaces import IAttributeAnnotatable
 
 from zope import schema
@@ -107,3 +107,20 @@ class ILockable(Interface):
          - token   : the underlying lock token
          - type    : the type of lock
         """
+
+class IRefreshableLockable(ILockable):
+    """ A component that is lockable and whose locks can be refreshed.
+    """
+    
+    def refresh_lock(lock_type=STEALABLE_LOCK):
+        """Refresh the lock so it expires later.
+        """
+
+# Configuration
+
+class ILockSettings(Interface):
+    """A component that looks up configuration settings for lock behavior. 
+    """
+    lock_on_ttw_edit = Attribute('A property that reveals whether '
+                                 'through-the-web locking is enabled.')
+

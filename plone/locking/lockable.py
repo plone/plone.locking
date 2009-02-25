@@ -1,25 +1,27 @@
 from zope.interface import implements
-from zope.component import adapts
+from zope.component import adapts, queryAdapter
 
 from persistent.dict import PersistentDict
 
 from zope.annotation.interfaces import IAnnotations
 
 from AccessControl import getSecurityManager
-from webdav.LockItem import LockItem, MAXTIMEOUT
+from webdav.LockItem import LockItem
 
-from plone.locking.interfaces import ILockable
+from plone.locking.interfaces import IRefreshableLockable
 from plone.locking.interfaces import INonStealableLock
 from plone.locking.interfaces import ITTWLockable
 from plone.locking.interfaces import STEALABLE_LOCK
+from plone.locking.interfaces import ILockSettings
 
 ANNOTATION_KEY = 'plone.locking'
+DEFAULT_TIMEOUT = 10 * 60L
 
 class TTWLockable(object):
     """An object that is being locked through-the-web
     """
 
-    implements(ILockable)
+    implements(IRefreshableLockable)
     adapts(ITTWLockable)
 
     def __init__(self, context):
@@ -27,15 +29,28 @@ class TTWLockable(object):
         self.__locks = None
         
     def lock(self, lock_type=STEALABLE_LOCK, children=False):
+        settings = queryAdapter(self.context, ILockSettings)
+        if settings is not None and settings.lock_on_ttw_edit is False:
+            return
+        
         if not self.locked():
             user = getSecurityManager().getUser()
             depth = children and 'infinity' or 0
-            lock = LockItem(user, depth=depth, timeout=MAXTIMEOUT)
+            lock = LockItem(user, depth=depth, timeout=DEFAULT_TIMEOUT)
             token = lock.getLockToken()
             self.context.wl_setLock(token, lock)
 
             self._locks()[lock_type.__name__] = dict(type = lock_type,
                                                   token = token)
+    
+    def refresh_lock(self, lock_type=STEALABLE_LOCK):
+        if not self.locked():
+            return
+            
+        key = self._locks().get(lock_type.__name__, None)
+        if key:
+            lock = self.context.wl_getLock(key['token'])
+            lock.refresh()
 
     def unlock(self, lock_type=STEALABLE_LOCK, stealable_only=True):
         if not self.locked():

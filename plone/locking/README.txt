@@ -41,7 +41,7 @@ If we try to lock it again, nothing happens.
    >>> lockable.lock()
    >>> lockable.locked()
    True
-
+   
 We can get information about the lock as well:
 
    >>> info = lockable.lock_info()
@@ -51,6 +51,15 @@ We can get information about the lock as well:
    True
    >>> info[0]['creator']
    'member1'
+
+We can refresh the lock so that its timeout is recalculated relative to the
+current time.
+
+  >>> old_lock_time = lockable.lock_info()[0]['time']
+  >>> lockable.refresh_lock()
+  >>> new_lock_time = lockable.lock_info()[0]['time']
+  >>> new_lock_time > old_lock_time
+  True
 
 Once we have finished working on the object, we can unlock it.
    >>> lockable.unlock()
@@ -225,10 +234,45 @@ When we are anonymous but do have edit rights we can also do a lock.
 Locking timeouts
 ================
 
-Lock timeout should be unlimited by default
+Lock timeout should be ten minutes by default
 
     >>> token = info[0]['token']
     >>> lock = lockable.context.wl_getLock(token)
     >>> lock._timeout
-    4294967295L
+    600L
 
+Turning locking on or off
+=========================
+
+The status of the entire TTW locking mechanism can be controlled by setting
+up an ILockSettings adapter with a lock_on_ttw_edit property.
+
+    >>> class DummyLockSettings(object):
+    ...     def __init__(self, context):
+    ...         self.context = context
+    ...     lock_on_ttw_edit = False
+    >>> from zope.component import getGlobalSiteManager
+    >>> from plone.locking.interfaces import ITTWLockable, ILockSettings
+    >>> gsm = getGlobalSiteManager()
+    >>> gsm.registerAdapter(DummyLockSettings, required=(ITTWLockable,), provided=ILockSettings)
+
+Now trying to lock the object should have no effect.
+
+    >>> lockable.unlock()
+    >>> lockable.locked()
+    False
+    >>> lockable.lock()
+    >>> lockable.locked()
+    False
+
+But if the property is True, then locking should function again.
+
+    >>> DummyLockSettings.lock_on_ttw_edit = True
+    >>> lockable.lock()
+    >>> lockable.locked()
+    True
+
+Clean up.
+
+    >>> gsm.unregisterAdapter(DummyLockSettings, required=(ITTWLockable,), provided=ILockSettings)
+    True

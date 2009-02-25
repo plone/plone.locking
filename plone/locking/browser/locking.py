@@ -6,7 +6,7 @@ from Products.CMFCore.utils import getToolByName
 from DateTime import DateTime
 from datetime import timedelta
 
-from plone.locking.interfaces import ILockable
+from plone.locking.interfaces import ILockable, IRefreshableLockable
 from zope.i18nmessageid import MessageFactory
 
 _ = MessageFactory('plone')
@@ -33,6 +33,13 @@ class LockingOperations(BrowserView):
         lockable = ILockable(self.context)
         if lockable.can_safely_unlock():
             lockable.unlock()
+    
+    def refresh_lock(self):
+        """Reset the lock start time
+        """
+        lockable = IRefreshableLockable(self.context, None)
+        if lockable is not None:
+            lockable.refresh_lock()
 
 class LockingInformation(BrowserView):
     """Lock information

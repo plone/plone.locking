@@ -1,17 +1,13 @@
 from setuptools import setup, find_packages
-import sys, os
+import os
 
-version = '2.0'
+version = '1.2.0'
 
 setup(name='plone.locking',
       version=version,
       description="webdav locking support",
-      long_description="""\
-plone.locking provides WebDAV locking support, with useful abstractions and
-views to assist a user interface. By default, it provides "stealable" locks,
-but can support other lock types. It is used by Plone, Archetypes and
-plone.app.iterate.
-""",
+      long_description=open(os.path.join('plone', 'locking', 'README.txt')).read() +
+           '\n' + open(os.path.join('docs', 'HISTORY.txt')).read(),
       classifiers=[
           "Environment :: Web Environment",
           "Framework :: Plone",

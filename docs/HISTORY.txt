@@ -1,8 +1,9 @@
 Changelog for plone.locking
+===========================
 
     (name of developer listed in brackets)
     
-plone.locking - 1.2.0 (unreleased)
+plone.locking - 1.2.0 (2009-03-04)
 
 - Added IRefreshableLockable interface and TTWLockable implementation.
   [davisagli]

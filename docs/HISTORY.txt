@@ -1,12 +1,14 @@
-Changelog for plone.locking
-===========================
+Changelog
+=========
 
-    (name of developer listed in brackets)
-    
-plone.locking - 1.2.1 (unreleased)
+1.2.1 (unreleased)
+------------------
 
+- Load the ``cmf.*`` permissions from Products.CMFCore.
+  [hannosch]
 
-plone.locking - 1.2.0 (2009-03-04)
+1.2.0 (2009-03-04)
+------------------
 
 - Added IRefreshableLockable interface and TTWLockable implementation.
   [davisagli]
@@ -14,7 +16,8 @@ plone.locking - 1.2.0 (2009-03-04)
 - Changed default lock timeout to 10 minutes.
   [davisagli]
 
-plone.locking - 1.1.0 (unreleased)
+1.1.0 (unreleased)
+------------------
 
 - Clarified license and copyright statements.
   [hannosch]
@@ -28,7 +31,8 @@ plone.locking - 1.1.0 (unreleased)
 - Fix missing internationalization (#8609 thanks to Vincent Fretin)
   [encolpe]
 
-plone.locking - 1.0.5
+1.0.5
+-----
 
 - Fix lock timeout which was set by default to 12 minutes, it is
   now set to maxtimeout (71582788 minutes).
@@ -38,4 +42,3 @@ plone.locking - 1.0.5
 - Fix TypeError when an anonymous user locks content.  Fixes
   http://dev.plone.org/plone/ticket/7246
   [maurits]
-

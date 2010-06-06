@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.2.1dev'
+version = '1.2.1'
 
 setup(name='plone.locking',
       version=version,
@@ -42,6 +42,7 @@ setup(name='plone.locking',
         'zope.viewlet',
         # 'Acquisition',
         # 'DateTime',
+        # 'Products.CMFCore',
         # 'Zope2',
       ],
       )

@@ -1,13 +1,12 @@
 from setuptools import setup, find_packages
-import os
 
-version = '1.2.2'
+version = '2.0'
 
 setup(name='plone.locking',
       version=version,
       description="webdav locking support",
-      long_description=open(os.path.join('plone', 'locking', 'README.txt')).read() +
-           '\n' + open(os.path.join('docs', 'HISTORY.txt')).read(),
+      long_description=open("README.txt").read() + "\n" +
+                       open("CHANGES.txt").read(),
       classifiers=[
           "Environment :: Web Environment",
           "Framework :: Plone",
@@ -19,8 +18,8 @@ setup(name='plone.locking',
       keywords='locking webdav plone archetypes',
       author='Plone Foundation',
       author_email='plone-developers@lists.sourceforge.net',
-      url='http://svn.plone.org/svn/plone/plone.locking',
-      license='GPL',
+      url='http://pypi.python.org/pypi/plone.locking',
+      license='GPL version 2',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['plone'],
       include_package_data=True,

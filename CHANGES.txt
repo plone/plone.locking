@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0 - unreleased
+2.0 - 2010-07-18
 ----------------
 
 - Define all package dependencies.
@@ -10,13 +10,13 @@ Changelog
 - Update license to GPL version 2 only.
   [hannosch]
 
-1.2.1 (2010-07-01)
+1.2.1 - 2010-07-01
 ------------------
 
 - Load the ``cmf.*`` permissions from Products.CMFCore.
   [hannosch]
 
-1.2.0 (2009-03-04)
+1.2.0 - 2009-03-04
 ------------------
 
 - Added IRefreshableLockable interface and TTWLockable implementation.
@@ -25,8 +25,8 @@ Changelog
 - Changed default lock timeout to 10 minutes.
   [davisagli]
 
-1.1.0 (unreleased)
-------------------
+1.1.0
+-----
 
 - Clarified license and copyright statements.
   [hannosch]

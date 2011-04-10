@@ -1,8 +1,12 @@
 Changelog
 =========
 
+
 2.0.1 - unreleased
 ------------------
+
+- Add MANIFEST.in.
+  [WouterVH]
 
 
 2.0 - 2010-07-18
@@ -14,11 +18,13 @@ Changelog
 - Update license to GPL version 2 only.
   [hannosch]
 
+
 1.2.1 - 2010-07-01
 ------------------
 
 - Load the ``cmf.*`` permissions from Products.CMFCore.
   [hannosch]
+
 
 1.2.0 - 2009-03-04
 ------------------
@@ -28,6 +34,7 @@ Changelog
 
 - Changed default lock timeout to 10 minutes.
   [davisagli]
+
 
 1.1.0
 -----
@@ -43,6 +50,7 @@ Changelog
 
 - Fix missing internationalization (#8609 thanks to Vincent Fretin)
   [encolpe]
+
 
 1.0.5
 -----

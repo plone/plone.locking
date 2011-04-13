@@ -52,8 +52,8 @@ Changelog
   [encolpe]
 
 
-1.0.5
------
+1.0.5 - 2008-01-03
+------------------
 
 - Fix lock timeout which was set by default to 12 minutes, it is
   now set to maxtimeout (71582788 minutes).
@@ -63,3 +63,9 @@ Changelog
 - Fix TypeError when an anonymous user locks content.  Fixes
   http://dev.plone.org/plone/ticket/7246
   [maurits]
+
+
+1.0 - 2007-08-17
+----------------
+
+- Initial release.

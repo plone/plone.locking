@@ -5,6 +5,10 @@ Changelog
 2.0.1 - unreleased
 ------------------
 
+- Make plone.locking check for the global lock settings if a context-specific
+  adapter is not found. Fixes http://dev.plone.org/plone/ticket/11779
+  [ggozad]
+
 - Add MANIFEST.in.
   [WouterVH]
 

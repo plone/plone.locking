@@ -34,7 +34,7 @@ class TTWLockable(object):
         if settings is None:
             # No context specific adapter, is this a Plone site?
             pprops = getToolByName(self.context, 'portal_properties', None)
-            if pprops is not None:
+            if pprops is not None and 'site_properties' in pprops.objectIds():
                 settings = pprops.site_properties
         if settings is not None and settings.lock_on_ttw_edit is False:
             return

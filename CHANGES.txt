@@ -1,8 +1,7 @@
 Changelog
 =========
 
-
-2.0.1 - unreleased
+2.0.1 - 2011-05-12
 ------------------
 
 - Make plone.locking check for the global lock settings if a context-specific

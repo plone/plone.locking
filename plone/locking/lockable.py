@@ -116,6 +116,7 @@ class TTWLockable(object):
     def lock_info(self):
         info = []
         rtokens = dict([(v['token'], v['type']) for v in self._locks(False).values()])
+        isReadOnly = self.context._p_jar.isReadOnly()
         for lock in self.context.wl_lockValues(1):
             if not lock.isValid():
                 continue # Skip invalid/expired locks

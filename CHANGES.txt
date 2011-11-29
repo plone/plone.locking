@@ -4,6 +4,10 @@ Changelog
 2.0.2 - unreleased
 ------------------
 
+- Do not cleanup stale lock if database is in read-only mode.
+  https://dev.plone.org/ticket/12239
+  [fafhrd91]
+
 
 2.0.1 - 2011-05-12
 ------------------

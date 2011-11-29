@@ -74,7 +74,10 @@ class TTWLockable(object):
         self._locks().clear()
 
     def locked(self):
-        return bool(self.context.wl_isLocked())
+        if self.lock_info():
+            return True
+        else: 
+            return False
 
     def can_safely_unlock(self, lock_type=STEALABLE_LOCK):
         if not lock_type.user_unlockable:
@@ -116,7 +119,8 @@ class TTWLockable(object):
     def lock_info(self):
         info = []
         rtokens = dict([(v['token'], v['type']) for v in self._locks(False).values()])
-        for lock in self.context.wl_lockValues(1):
+        isReadOnly = self.context._p_jar.isReadOnly()
+        for lock in self.context.wl_lockValues(not isReadOnly):
             if not lock.isValid():
                 continue # Skip invalid/expired locks
             token = lock.getLockToken()

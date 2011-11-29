@@ -74,10 +74,7 @@ class TTWLockable(object):
         self._locks().clear()
 
     def locked(self):
-        isReadOnly = self.context._p_jar.isReadOnly()
-        locks = self.context.wl_lockmapping(killinvalids=not isReadOnly)
-
-        if locks is not None and locks.keys(): 
+        if self.lock_info():
             return True
         else: 
             return False

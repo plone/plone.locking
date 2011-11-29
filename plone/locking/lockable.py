@@ -74,7 +74,13 @@ class TTWLockable(object):
         self._locks().clear()
 
     def locked(self):
-        return bool(self.context.wl_isLocked())
+        isReadOnly = self.context._p_jar.isReadOnly()
+        locks = self.context.wl_lockmapping(killinvalids=not isReadOnly)
+
+        if locks.keys(): 
+            return True
+        else: 
+            return False
 
     def can_safely_unlock(self, lock_type=STEALABLE_LOCK):
         if not lock_type.user_unlockable:

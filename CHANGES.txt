@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.2 - unreleased
+2.0.2 (2011-11-29)
 ------------------
 
 - Do not cleanup stale lock if database is in read-only mode.

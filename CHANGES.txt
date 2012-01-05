@@ -1,17 +1,18 @@
 Changelog
 =========
 
-2.0.3 (unreleased)
+2.0.3 (2012-01-04)
 ------------------
 
-- Nothing changed yet.
-
+- Check if context is not joined to zodb connection for transaction where lock 
+  is added.
+  [fafhrd91]
 
 2.0.2 (2011-11-29)
 ------------------
 
 - Do not cleanup stale lock if database is in read-only mode.
-  https://dev.plone.org/ticket/12239
+  http://dev.plone.org/ticket/12239
   [fafhrd91]
 
 

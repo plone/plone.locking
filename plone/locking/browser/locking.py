@@ -25,7 +25,14 @@ class LockingOperations(BrowserView):
         lockable = ILockable(self.context)
         lockable.unlock()
         if redirect:
-            self.request.RESPONSE.redirect(self.context.absolute_url())
+            url = self.context.absolute_url()
+            props_tool = getToolByName(self.context, 'portal_properties')
+            if props_tool:
+                types_use_view = props_tool.site_properties.typesUseViewActionInListings
+                if self.context.portal_type in types_use_view:
+                    url += '/view'
+
+            self.request.RESPONSE.redirect(url)
 
     def safe_unlock(self):
         """Unlock the object if the current user has the lock

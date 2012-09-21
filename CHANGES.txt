@@ -4,7 +4,9 @@ Changelog
 2.0.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Do not download the file when we click on "unlock" in the context of a file.
+  Refs https://dev.plone.org/ticket/13191
+  [thomasdesvenain]
 
 
 2.0.3 (2012-01-04)

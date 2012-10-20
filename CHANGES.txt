@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.4 (unreleased)
+2.0.4 (2012-10-20)
 ------------------
 
 - Do not download the file when we click on "unlock" in the context of a file.

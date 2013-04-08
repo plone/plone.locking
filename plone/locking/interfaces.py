@@ -16,16 +16,19 @@ class ILockType(Interface):
                             description=u"Whether this type of lock is stealable")
     user_unlockable = schema.Bool(title=u"User unlockable",
                                   description=u"Whether this type of lock should be unlockable immediately")
+    timeout = schema.Int(title=u"lock timeout",
+                         description=u"Locking timeout in minutes")
 
 class LockType(object):
     implements(ILockType)
-    
-    def __init__(self, name, stealable, user_unlockable):
+
+    def __init__(self, name, stealable, user_unlockable, timeout=10):
         self.__name__ = name
         self.stealable = stealable
         self.user_unlockable = user_unlockable
+        self.timeout = timeout
          
-STEALABLE_LOCK = LockType(u"plone.locking.stealable", stealable=True, user_unlockable=True)
+STEALABLE_LOCK = LockType(u"plone.locking.stealable", stealable=True, user_unlockable=True, timeout=10)
 
 # Marker interfaces
 

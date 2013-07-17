@@ -4,7 +4,7 @@ Changelog
 2.0.5 (unreleased)
 ------------------
 
-- The locking timeout in now modificable through LockType Definition [parruc]
+- The locking timeout is now modifiable through LockType definition [parruc]
 
 
 2.0.4 (2012-10-20)

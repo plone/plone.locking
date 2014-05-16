@@ -34,13 +34,20 @@ class LockingOperations(BrowserView):
 
             self.request.RESPONSE.redirect(url)
 
+    def create_lock(self):
+        """Lock the object if it is unlocked
+        """
+        lockable = IRefreshableLockable(self.context, None)
+        if lockable is not None:
+            lockable.lock()
+
     def safe_unlock(self):
         """Unlock the object if the current user has the lock
         """
         lockable = ILockable(self.context)
         if lockable.can_safely_unlock():
             lockable.unlock()
-    
+
     def refresh_lock(self):
         """Reset the lock start time
         """

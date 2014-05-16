@@ -4,7 +4,8 @@ Changelog
 2.0.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Adding "create_lock" to "plone_lock_operations"
+  [hman]
 
 
 2.0.4 (2012-10-20)
@@ -18,7 +19,7 @@ Changelog
 2.0.3 (2012-01-04)
 ------------------
 
-- Check if context is not joined to zodb connection for transaction where lock 
+- Check if context is not joined to zodb connection for transaction where lock
   is added.
   [fafhrd91]
 

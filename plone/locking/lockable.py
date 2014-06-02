@@ -16,7 +16,6 @@ from plone.locking.interfaces import STEALABLE_LOCK
 from plone.locking.interfaces import ILockSettings
 
 ANNOTATION_KEY = 'plone.locking'
-DEFAULT_TIMEOUT = 10 * 60L
 
 class TTWLockable(object):
     """An object that is being locked through-the-web
@@ -42,7 +41,7 @@ class TTWLockable(object):
         if not self.locked():
             user = getSecurityManager().getUser()
             depth = children and 'infinity' or 0
-            lock = LockItem(user, depth=depth, timeout=DEFAULT_TIMEOUT)
+            lock = LockItem(user, depth=depth, timeout=lock_type.timeout * 60L)
             token = lock.getLockToken()
             self.context.wl_setLock(token, lock)
 

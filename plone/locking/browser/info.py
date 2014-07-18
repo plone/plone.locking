@@ -14,7 +14,7 @@ class LockInfoViewlet(BrowserView):
     an implementation of the info box in a single place.
     """
     implements(IViewlet)
-    
+
     template = ViewPageTemplateFile('info.pt')
 
     def __init__(self, context, request, view, manager):
@@ -31,9 +31,9 @@ class LockInfoViewlet(BrowserView):
 
     def render(self):
         return self.template()
-    
+
     def lock_is_stealable(self):
         return self.info.lock_is_stealable()
-        
+
     def lock_info(self):
         return self.info.lock_info()

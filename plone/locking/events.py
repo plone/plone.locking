@@ -10,6 +10,7 @@ def lockOnEditBegins(obj, event):
     if not lockable.locked():
         lockable.lock()
 
+
 def unlockAfterModification(obj, event):
     """Release the DAV lock after save
     """

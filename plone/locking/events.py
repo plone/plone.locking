@@ -1,5 +1,3 @@
-from zope.interface import implements
-
 from plone.locking.interfaces import ILockable
 
 # These event handlers are not connected by default, but can be used for
@@ -11,6 +9,7 @@ def lockOnEditBegins(obj, event):
     lockable = ILockable(obj)
     if not lockable.locked():
         lockable.lock()
+
 
 def unlockAfterModification(obj, event):
     """Release the DAV lock after save

@@ -7,16 +7,21 @@ Basic locking
 By default, this is enabled on any ITTWLockable object. By default, this
 applies to any Archetypes content object.
 
+   >>> portal = layer['portal']
+
+   >>> addMember(portal, 'member1', 'Member one')
+   >>> addMember(portal, 'member2', 'Member two')
    >>> from Products.Archetypes.BaseContent import BaseContent
    >>> obj = BaseContent('id')
-   >>> self.login('member1')
+   >>> from plone.app.testing import login, logout
+   >>> login(portal, 'member1')
 
 To lock this object, we adapt it to ILockable. The default adapter implements
 locking using WebDAV locks.
 
    >>> from plone.locking.interfaces import ILockable
    >>> lockable = ILockable(obj)
-   
+
 To begin with, this object will not be locked:
 
    >>> lockable.locked()
@@ -80,7 +85,7 @@ like taking with the left hand and giving to the right).
     >>> lockable.stealable()
     True
     
-    >>> self.login('member2')
+    >>> login(portal, 'member2')
     
     >>> lockable.locked()
     True
@@ -123,7 +128,7 @@ Another user is not, and unlock() has no effect.
     >>> lockable.locked()
     True
     
-    >>> self.login('member1')
+    >>> login(portal, 'member1')
     
     >>> lockable.stealable()
     False
@@ -210,7 +215,7 @@ Anonymous locking
 
 When we are anonymous but do have edit rights we can also do a lock.
 
-   >>> self.logout()
+   >>> logout()
    >>> lockable.lock()
    >>> lockable.locked()
    True

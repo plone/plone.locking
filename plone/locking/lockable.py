@@ -17,6 +17,7 @@ from plone.locking.interfaces import ILockSettings
 
 ANNOTATION_KEY = 'plone.locking'
 
+
 class TTWLockable(object):
     """An object that is being locked through-the-web
     """
@@ -27,7 +28,7 @@ class TTWLockable(object):
     def __init__(self, context):
         self.context = context
         self.__locks = None
-        
+
     def lock(self, lock_type=STEALABLE_LOCK, children=False):
         settings = queryAdapter(self.context, ILockSettings)
         if settings is None:
@@ -37,7 +38,7 @@ class TTWLockable(object):
                 settings = pprops.site_properties
         if settings is not None and settings.lock_on_ttw_edit is False:
             return
-        
+
         if not self.locked():
             user = getSecurityManager().getUser()
             depth = children and 'infinity' or 0
@@ -45,13 +46,13 @@ class TTWLockable(object):
             token = lock.getLockToken()
             self.context.wl_setLock(token, lock)
 
-            self._locks()[lock_type.__name__] = dict(type = lock_type,
-                                                  token = token)
-    
+            self._locks()[lock_type.__name__] = dict(type=lock_type,
+                                                  token=token)
+
     def refresh_lock(self, lock_type=STEALABLE_LOCK):
         if not self.locked():
             return
-            
+
         key = self._locks().get(lock_type.__name__, None)
         if key:
             lock = self.context.wl_getLock(key['token'])
@@ -75,7 +76,7 @@ class TTWLockable(object):
     def locked(self):
         if self.lock_info():
             return True
-        else: 
+        else:
             return False
 
     def can_safely_unlock(self, lock_type=STEALABLE_LOCK):
@@ -107,7 +108,7 @@ class TTWLockable(object):
             if not hasattr(l['type'], '__name__') or \
                l['type'].__name__ != lock_type.__name__:
                 return False
-        # The lock type is stealable, and the object is not marked as 
+        # The lock type is stealable, and the object is not marked as
         # non-stelaable, so return True
         if not INonStealableLock.providedBy(self.context):
             return True
@@ -125,17 +126,17 @@ class TTWLockable(object):
             isReadOnly = False
         for lock in self.context.wl_lockValues(not isReadOnly):
             if not lock.isValid():
-                continue # Skip invalid/expired locks
+                continue  # Skip invalid/expired locks
             token = lock.getLockToken()
             creator = lock.getCreator()
             # creator can be None when locked by an anonymous user
             if creator is not None:
                 creator = creator[1]
             info.append({
-                'creator' : creator,
-                'time'    : lock.getModifiedTime(),
-                'token'   : token,
-                'type'    : rtokens.get(token, None),
+                'creator': creator,
+                'time': lock.getModifiedTime(),
+                'token': token,
+                'type': rtokens.get(token, None),
             })
         return info
 

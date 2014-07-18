@@ -2,7 +2,6 @@ import doctest
 import unittest
 
 from DateTime.DateTime import DateTime
-from Testing.ZopeTestCase import FunctionalDocFileSuite as Suite
 from Products.CMFCore.utils import getToolByName
 
 from plone.app.testing.bbb import PTC_FUNCTIONAL_TESTING
@@ -24,7 +23,6 @@ def setUp(self):
     addMember(self, 'member2', 'Member two')
 
 def test_suite():
-    from unittest import TestSuite, makeSuite
     suite = unittest.TestSuite()
     suite.addTest(
         layered(doctest.DocFileSuite('README.txt',

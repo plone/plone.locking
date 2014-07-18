@@ -6,7 +6,6 @@ from zope.viewlet.interfaces import IViewlet
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
-from plone.locking.interfaces import ILockable
 
 class LockInfoViewlet(BrowserView):
     """This is a viewlet which is not hooked up anywhere. It is referenced 

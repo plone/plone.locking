@@ -1,5 +1,3 @@
-from zope.interface import implements
-
 from plone.locking.interfaces import ILockable
 
 # These event handlers are not connected by default, but can be used for

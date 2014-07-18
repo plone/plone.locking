@@ -27,7 +27,7 @@ setup(name='plone.locking',
       extras_require=dict(
         test=[
             'Products.Archetypes',
-            'Products.PloneTestCase',
+            'plone.app.testing',
         ]
       ),
       install_requires=[

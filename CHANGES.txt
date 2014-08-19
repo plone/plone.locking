@@ -4,6 +4,9 @@ Changelog
 2.0.5 (unreleased)
 ------------------
 
+- Adding "create_lock" to "plone_lock_operations"
+  [hman]
+
 - The locking timeout is now modifiable through LockType definition
   [parruc]
 
@@ -22,7 +25,7 @@ Changelog
 2.0.3 (2012-01-04)
 ------------------
 
-- Check if context is not joined to zodb connection for transaction where lock 
+- Check if context is not joined to zodb connection for transaction where lock
   is added.
   [fafhrd91]
 

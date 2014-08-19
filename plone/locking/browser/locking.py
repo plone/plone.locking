@@ -55,6 +55,7 @@ class LockingOperations(BrowserView):
         if lockable is not None:
             lockable.refresh_lock()
 
+
 class LockingInformation(BrowserView):
     """Lock information
     """
@@ -114,13 +115,13 @@ class LockingInformation(BrowserView):
             time_difference = self._getNiceTimeDifference(time)
 
             return {
-                'creator'         : creator,
-                'fullname'        : fullname,
-                'author_page'     : author_page,
-                'time'            : time,
-                'time_difference' : time_difference,
-                'token'           : token,
-                'type'            : lock_type,
+                'creator': creator,
+                'fullname': fullname,
+                'author_page': author_page,
+                'time': time,
+                'time_difference': time_difference,
+                'token': token,
+                'type': lock_type,
             }
 
     def _getNiceTimeDifference(self, baseTime):
@@ -129,7 +130,7 @@ class LockingInformation(BrowserView):
         delta = timedelta(now - DateTime(baseTime))
         days = delta.days
         hours = int(delta.seconds / 3600)
-        minutes = (delta.seconds - (hours * 3600)) /60
+        minutes = (delta.seconds - (hours * 3600)) / 60
 
         dateString = u""
         if days == 0:

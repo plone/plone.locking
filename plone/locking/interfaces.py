@@ -7,7 +7,8 @@ from zope import schema
 
 # Timeouts are expressed in minutes
 DEFAULT_TIMEOUT = 10L
-MAX_TIMEOUT = ((2L**32)-1)/60
+MAX_TIMEOUT = ((2L ** 32) - 1) / 60
+
 
 class ILockType(Interface):
     """Representation of a type of lock
@@ -22,6 +23,7 @@ class ILockType(Interface):
                                   description=u"Whether this type of lock should be unlockable immediately")
     timeout = schema.Int(title=u"lock timeout",
                          description=u"Locking timeout in minutes")
+
 
 class LockType(object):
     implements(ILockType)
@@ -39,6 +41,7 @@ STEALABLE_LOCK = LockType(u"plone.locking.stealable", stealable=True, user_unloc
 class ITTWLockable(IAttributeAnnotatable):
     """Marker interface for objects that are lockable through-the-web
     """
+
 
 class INonStealableLock(Interface):
     """Mark an object with this interface to make locks be non-stealable.
@@ -115,6 +118,7 @@ class ILockable(Interface):
          - type    : the type of lock
         """
 
+
 class IRefreshableLockable(ILockable):
     """ A component that is lockable and whose locks can be refreshed.
     """
@@ -130,4 +134,3 @@ class ILockSettings(Interface):
     """
     lock_on_ttw_edit = Attribute('A property that reveals whether '
                                  'through-the-web locking is enabled.')
-

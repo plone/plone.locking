@@ -38,7 +38,7 @@ If we try to lock it again, nothing happens.
    >>> lockable.lock()
    >>> lockable.locked()
    True
-   
+
 We can get information about the lock as well:
 
    >>> info = lockable.lock_info()
@@ -62,7 +62,7 @@ Once we have finished working on the object, we can unlock it.
    >>> lockable.unlock()
    >>> lockable.locked()
    False
-   
+
 There is no lock info when there is no lock:
 
     >>> lockable.lock_info()
@@ -84,28 +84,28 @@ like taking with the left hand and giving to the right).
     True
     >>> lockable.stealable()
     True
-    
+
     >>> login(portal, 'member2')
-    
+
     >>> lockable.locked()
     True
     >>> lockable.can_safely_unlock()
     False
     >>> lockable.stealable()
     True
-    
+
     >>> lockable.unlock()
     >>> lockable.locked()
     False
-    
+
 Unlocked objects are "stealable" and can be safely unlocked, since calling
 unlock() on an unlocked object has no effect.
-    
+
     >>> lockable.stealable()
     True
     >>> lockable.can_safely_unlock()
     True
-    
+
 However, an object can be marked as having a non-stealable lock
 
     >>> from plone.locking.interfaces import INonStealableLock
@@ -121,21 +121,21 @@ The owner of the lock is of course free to unlock
     >>> lockable.unlock()
     >>> lockable.locked()
     False
-    
+
 Another user is not, and unlock() has no effect.
 
     >>> lockable.lock()
     >>> lockable.locked()
     True
-    
+
     >>> login(portal, 'member1')
-    
+
     >>> lockable.stealable()
     False
     >>> lockable.unlock()
     >>> lockable.locked()
     True
-    
+
     >>> from zope.interface import noLongerProvides
     >>> noLongerProvides(obj, INonStealableLock)
     >>> lockable.clear_locks()
@@ -160,7 +160,7 @@ copy of an object when a working copy is checked out:
 
     >>> from plone.locking.interfaces import LockType
     >>> COCI_LOCK = LockType(u'coci.lock', stealable=False, user_unlockable=False)
-    
+
 This is a very restrictive lock - it cannot be stolen or unlocked by the
 user. If we lock with this lock type, no-one can steal or safely unlock
 the object, regardless of lock type.
@@ -168,40 +168,40 @@ the object, regardless of lock type.
     >>> lockable.lock(COCI_LOCK)
     >>> lockable.locked()
     True
-    
+
     >>> lockable.can_safely_unlock()
     False
     >>> lockable.can_safely_unlock(COCI_LOCK)
     False
-    
+
     >>> lockable.stealable()
     False
     >>> lockable.stealable(COCI_LOCK)
     False
-    
+
     >>> lockable.unlock(COCI_LOCK)
     >>> lockable.locked()
     False
-    
+
 Now consider a lock that is stealable, but distinct from the regular stealable
-lock. In this case, code managing one type of lock cannot steal locks or 
+lock. In this case, code managing one type of lock cannot steal locks or
 safely unlock objects locked with the other:
 
     >>> SPECIAL_LOCK = LockType(u'special.lock', stealable=True, user_unlockable=True)
     >>> lockable.lock(SPECIAL_LOCK)
     >>> lockable.locked()
     True
-    
+
     >>> lockable.can_safely_unlock()
     False
     >>> lockable.can_safely_unlock(SPECIAL_LOCK)
     True
-    
+
     >>> lockable.stealable()
     False
     >>> lockable.stealable(SPECIAL_LOCK)
     True
-    
+
     >>> lockable.unlock()
     >>> lockable.locked()
     True

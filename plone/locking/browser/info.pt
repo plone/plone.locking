@@ -27,7 +27,8 @@
                 tal:content="lock_details/time_difference" /> ago.
         </tal:no-author-page>
         <form tal:condition="stealable"
-              tal:attributes="action string:${context/absolute_url}/@@plone_lock_operations/force_unlock">
+              tal:attributes="action string:${context/absolute_url}/@@plone_lock_operations/force_unlock"
+              method="POST">
           <span i18n:translate="description_webdav_locked_steal">
             If you are certain this user has abandoned the object,
             you may

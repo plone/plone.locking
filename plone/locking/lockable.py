@@ -46,8 +46,7 @@ class TTWLockable(object):
             token = lock.getLockToken()
             self.context.wl_setLock(token, lock)
 
-            self._locks()[lock_type.__name__] = dict(type=lock_type,
-                                                  token=token)
+            self._locks()[lock_type.__name__] = dict(type=lock_type, token=token)
 
     def refresh_lock(self, lock_type=STEALABLE_LOCK):
         if not self.locked():

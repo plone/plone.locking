@@ -140,9 +140,9 @@ class LockingInformation(BrowserView):
                 else:
                     dateString = _(u"$m minutes", mapping={'m': minutes})
             elif hours == 1:
-                dateString = _(u"$h hour and $m minutes", mapping={'h': hours, 'm': minutes})
+                dateString = _(u"$h hour and $m minutes", mapping={'h': hours, 'm': minutes})  # noqa
             else:
-                dateString = _(u"$h hours and $m minutes", mapping={'h': hours, 'm': minutes})
+                dateString = _(u"$h hours and $m minutes", mapping={'h': hours, 'm': minutes})  # noqa
         else:
             if days == 1:
                 dateString = _(u"$d day and $h hours", mapping={'d': days, 'h': hours})

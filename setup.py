@@ -5,8 +5,8 @@ version = '2.0.7.dev0'
 setup(name='plone.locking',
       version=version,
       description="webdav locking support",
-      long_description=open("README.txt").read() + "\n" +
-                       open("CHANGES.txt").read(),
+      long_description=open("README.rst").read() + "\n" +
+                       open("CHANGES.rst").read(),
       classifiers=[
           "Environment :: Web Environment",
           "Framework :: Plone",

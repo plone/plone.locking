@@ -4,7 +4,9 @@ Changelog
 2.0.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix possible package problem with Python 2.6 and old setuptools (at
+  least 0.6c11) not finding the ``README.txt``.
+  [maurits]
 
 
 2.0.6 (2015-06-05)

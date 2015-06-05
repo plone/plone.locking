@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.7 (unreleased)
+2.0.7 (2015-06-05)
 ------------------
 
 - Fix possible package problem with Python 2.6 and old setuptools (at

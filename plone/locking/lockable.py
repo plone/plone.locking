@@ -157,9 +157,14 @@ class TTWLockable(object):
 
         annotations = IAnnotations(self.context)
         locks = annotations.get(ANNOTATION_KEY, None)
-        safeWrite(annotations.obj.__annotations__)
         if locks is None and create:
             locks = annotations.setdefault(ANNOTATION_KEY, PersistentDict())
+
+        try:
+            safeWrite(annotations.obj.__annotations__)
+        except AttributeError:
+            pass
+
         if locks is not None:
             self.__locks = locks
             return self.__locks

@@ -4,7 +4,8 @@ Changelog
 2.0.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix write on read CSRF issues with latest plone.protect
+  [vangheem]
 
 
 2.0.7 (2015-06-05)

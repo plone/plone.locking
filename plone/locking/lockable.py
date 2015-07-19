@@ -15,6 +15,13 @@ from plone.locking.interfaces import ITTWLockable
 from plone.locking.interfaces import STEALABLE_LOCK
 from plone.locking.interfaces import ILockSettings
 
+try:
+    from plone.protect.auto import safeWrite
+except ImportError:
+    def safeWrite(*args):
+        pass
+
+
 ANNOTATION_KEY = 'plone.locking'
 
 
@@ -44,9 +51,12 @@ class TTWLockable(object):
             depth = children and 'infinity' or 0
             lock = LockItem(user, depth=depth, timeout=lock_type.timeout * 60L)
             token = lock.getLockToken()
+            self.context._v_safe_write = True
             self.context.wl_setLock(token, lock)
 
-            self._locks()[lock_type.__name__] = dict(type=lock_type, token=token)
+            locks = self._locks()
+            locks[lock_type.__name__] = dict(type=lock_type, token=token)
+            safeWrite(self.context)
 
     def refresh_lock(self, lock_type=STEALABLE_LOCK):
         if not self.locked():
@@ -123,7 +133,9 @@ class TTWLockable(object):
             isReadOnly = jar.isReadOnly()
         else:
             isReadOnly = False
-        for lock in self.context.wl_lockValues(not isReadOnly):
+        lock_mapping = self.context.wl_lockmapping(not isReadOnly)
+        safeWrite(lock_mapping)
+        for lock in lock_mapping.values():
             if not lock.isValid():
                 continue  # Skip invalid/expired locks
             token = lock.getLockToken()
@@ -147,6 +159,12 @@ class TTWLockable(object):
         locks = annotations.get(ANNOTATION_KEY, None)
         if locks is None and create:
             locks = annotations.setdefault(ANNOTATION_KEY, PersistentDict())
+
+        try:
+            safeWrite(annotations.obj.__annotations__)
+        except AttributeError:
+            pass
+
         if locks is not None:
             self.__locks = locks
             return self.__locks

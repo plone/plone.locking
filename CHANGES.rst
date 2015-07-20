@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.8 (unreleased)
+2.0.8 (2015-07-20)
 ------------------
 
 - Fix write on read CSRF issues with latest plone.protect

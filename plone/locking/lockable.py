@@ -10,7 +10,7 @@ from AccessControl import getSecurityManager
 from webdav.LockItem import LockItem
 
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import ISiteSchema
+from Products.CMFPlone.interfaces import IEditingSchema
 
 from plone.locking.interfaces import IRefreshableLockable
 from plone.locking.interfaces import INonStealableLock
@@ -43,7 +43,7 @@ class TTWLockable(object):
         settings = queryAdapter(self.context, ILockSettings)
         if settings is None:
             registry = getUtility(IRegistry)
-            settings = registry.forInterface(ISiteSchema,
+            settings = registry.forInterface(IEditingSchema,
                                              prefix='plone')
         if settings is not None and settings.lock_on_ttw_edit is False:
             return

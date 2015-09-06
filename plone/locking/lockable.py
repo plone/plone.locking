@@ -4,9 +4,9 @@ from zope.component import adapts, queryAdapter
 from persistent.dict import PersistentDict
 
 from zope.annotation.interfaces import IAnnotations
+from zope.component import getUtility
 
 from AccessControl import getSecurityManager
-from Products.CMFCore.utils import getToolByName
 from webdav.LockItem import LockItem
 
 from plone.locking.interfaces import IRefreshableLockable
@@ -39,10 +39,9 @@ class TTWLockable(object):
     def lock(self, lock_type=STEALABLE_LOCK, children=False):
         settings = queryAdapter(self.context, ILockSettings)
         if settings is None:
-            # No context specific adapter, is this a Plone site?
-            pprops = getToolByName(self.context, 'portal_properties', None)
-            if pprops is not None and 'site_properties' in pprops.objectIds():
-                settings = pprops.site_properties
+            registry = getUtility(IRegistry)
+            settings = registry.forInterface(ISiteSchema,
+                                             prefix='plone')
         if settings is not None and settings.lock_on_ttw_edit is False:
             return
 

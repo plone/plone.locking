@@ -9,6 +9,9 @@ from zope.component import getUtility
 from AccessControl import getSecurityManager
 from webdav.LockItem import LockItem
 
+from plone.registry.interfaces import IRegistry
+from Products.CMFPlone.interfaces import ISiteSchema
+
 from plone.locking.interfaces import IRefreshableLockable
 from plone.locking.interfaces import INonStealableLock
 from plone.locking.interfaces import ITTWLockable

@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.1.0 (unreleased)
+2.1.0 (2015-09-07)
 ------------------
 
 - Pull lock_on_ttw_edit setting from 

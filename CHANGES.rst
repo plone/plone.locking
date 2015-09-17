@@ -4,13 +4,15 @@ Changelog
 2.1.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Use registry lookup for types_use_view_action_in_listings
+  [esteele]
 
 
 2.1.0 (2015-09-07)
 ------------------
 
-- Pull lock_on_ttw_edit setting from 
+- Pull lock_on_ttw_edit setting from the configuration registry
+  [esteele]
 
 
 2.0.8 (2015-07-20)

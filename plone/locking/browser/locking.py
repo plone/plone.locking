@@ -1,5 +1,6 @@
 
 from Acquisition import aq_inner
+from zope.component import getUtility
 from Products.Five import BrowserView
 from Products.CMFCore.utils import getToolByName
 
@@ -7,6 +8,7 @@ from DateTime import DateTime
 from datetime import timedelta
 
 from plone.locking.interfaces import ILockable, IRefreshableLockable
+from plone.registry.interfaces import IRegistry
 from zope.i18nmessageid import MessageFactory
 
 _ = MessageFactory('plone')
@@ -26,11 +28,11 @@ class LockingOperations(BrowserView):
         lockable.unlock()
         if redirect:
             url = self.context.absolute_url()
-            props_tool = getToolByName(self.context, 'portal_properties')
-            if props_tool:
-                types_use_view = props_tool.site_properties.typesUseViewActionInListings
-                if self.context.portal_type in types_use_view:
-                    url += '/view'
+            registry = getUtility(IRegistry)
+            types_use_view = registry.get(
+                'plone.types_view_action_in_listings', [])
+            if self.context.portal_type in types_use_view:
+                url += '/view'
 
             self.request.RESPONSE.redirect(url)
 

@@ -30,7 +30,7 @@ class LockingOperations(BrowserView):
             url = self.context.absolute_url()
             registry = getUtility(IRegistry)
             types_use_view = registry.get(
-                'plone.types_view_action_in_listings', [])
+                'plone.types_use_view_action_in_listings', [])
             if self.context.portal_type in types_use_view:
                 url += '/view'
 

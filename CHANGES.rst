@@ -4,8 +4,8 @@ Changelog
 2.0.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Locks stored on annotations are a safe write on read.
+  [gforcada]
 
 2.0.8 (2015-07-20)
 ------------------

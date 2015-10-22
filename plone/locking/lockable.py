@@ -56,6 +56,8 @@ class TTWLockable(object):
 
             locks = self._locks()
             locks[lock_type.__name__] = dict(type=lock_type, token=token)
+            if getattr(locks, '_p_oid', None) is not None:
+                safeWrite(locks)
             safeWrite(self.context)
 
     def refresh_lock(self, lock_type=STEALABLE_LOCK):

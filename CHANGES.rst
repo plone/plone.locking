@@ -4,11 +4,14 @@ Changelog
 2.1.1 (unreleased)
 ------------------
 
+New:
+
 - Use registry lookup for types_use_view_action_in_listings
   [esteele]
 
 - Locks stored on annotations are a safe write on read.
   [gforcada]
+
 
 2.1.0 (2015-09-07)
 ------------------

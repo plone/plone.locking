@@ -1,4 +1,4 @@
-from zope.interface import implements
+from zope.interface import implementer
 from zope.component import getMultiAdapter
 
 from zope.viewlet.interfaces import IViewlet
@@ -7,13 +7,13 @@ from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 
+@implementer(IViewlet)
 class LockInfoViewlet(BrowserView):
     """This is a viewlet which is not hooked up anywhere. It is referenced
     from plone.app.layout. We do it this way to avoid having the  lower-level
     plone.locking depend on these packages, whilst still providing
     an implementation of the info box in a single place.
     """
-    implements(IViewlet)
 
     template = ViewPageTemplateFile('info.pt')
 

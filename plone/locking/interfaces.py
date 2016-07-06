@@ -1,4 +1,4 @@
-from zope.interface import implements, Interface, Attribute
+from zope.interface import implementer, Interface, Attribute
 from zope.annotation.interfaces import IAttributeAnnotatable
 
 from zope import schema
@@ -25,8 +25,8 @@ class ILockType(Interface):
                          description=u"Locking timeout in minutes")
 
 
+@implementer(ILockType)
 class LockType(object):
-    implements(ILockType)
 
     def __init__(self, name, stealable, user_unlockable, timeout=DEFAULT_TIMEOUT):
         self.__name__ = name

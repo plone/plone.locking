@@ -10,7 +10,8 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- Update README.rst with Compatibility
+  [djowett]
 
 Bug fixes:
 

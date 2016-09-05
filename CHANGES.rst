@@ -10,7 +10,8 @@ New:
 
 Fixes:
 
-- *add item here*
+- Update README.rst with Compatibility
+  [djowett]
 
 
 2.0.9 (2015-10-28)

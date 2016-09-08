@@ -4,10 +4,6 @@ Changelog
 2.0.10 (unreleased)
 -------------------
 
-New:
-
-- *add item here*
-
 Fixes:
 
 - Update README.rst with Compatibility

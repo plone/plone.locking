@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Test fix: Use print in doctest (Python 3/ Zope 4 compat)
+  [davisagli]
 
 
 2.1.3 (2016-09-09)

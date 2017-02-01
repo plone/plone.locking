@@ -235,8 +235,8 @@ Lock timeout should be ten minutes by default
 
     >>> token = info[0]['token']
     >>> lock = lockable.context.wl_getLock(token)
-    >>> lock._timeout
-    600L
+    >>> print(lock._timeout)
+    600
 
 Turning locking on or off
 =========================

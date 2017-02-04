@@ -15,7 +15,7 @@ New features:
 Bug fixes:
 
 - Test fix: Use print in doctest (Python 3/ Zope 4 compat)
-  [davisagli]
+  [MatthewWilkes]
 
 
 2.1.3 (2016-09-09)

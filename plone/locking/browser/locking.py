@@ -1,15 +1,15 @@
-
+# -*- coding: utf-8 -*-
 from Acquisition import aq_inner
-from zope.component import getUtility
-from Products.Five import BrowserView
-from Products.CMFCore.utils import getToolByName
-
 from DateTime import DateTime
 from datetime import timedelta
-
-from plone.locking.interfaces import ILockable, IRefreshableLockable
+from plone.locking.interfaces import ILockable
+from plone.locking.interfaces import IRefreshableLockable
 from plone.registry.interfaces import IRegistry
+from Products.CMFCore.utils import getToolByName
+from Products.Five import BrowserView
+from zope.component import getUtility
 from zope.i18nmessageid import MessageFactory
+
 
 _ = MessageFactory('plone')
 
@@ -17,6 +17,17 @@ _ = MessageFactory('plone')
 class LockingOperations(BrowserView):
     """Lock acquisition and stealing operations
     """
+
+    def redirect(self):
+        """Redirect to the context view if needed
+        """
+        url = self.context.absolute_url()
+        registry = getUtility(IRegistry)
+        types_use_view = registry.get(
+            'plone.types_use_view_action_in_listings', [])
+        if self.context.portal_type in types_use_view:
+            url += '/view'
+        self.request.RESPONSE.redirect(url)
 
     def force_unlock(self, redirect=True):
         """Steal the lock.
@@ -27,35 +38,34 @@ class LockingOperations(BrowserView):
         lockable = ILockable(self.context)
         lockable.unlock()
         if redirect:
-            url = self.context.absolute_url()
-            registry = getUtility(IRegistry)
-            types_use_view = registry.get(
-                'plone.types_use_view_action_in_listings', [])
-            if self.context.portal_type in types_use_view:
-                url += '/view'
+            self.redirect()
 
-            self.request.RESPONSE.redirect(url)
-
-    def create_lock(self):
+    def create_lock(self, redirect=True):
         """Lock the object if it is unlocked
         """
         lockable = IRefreshableLockable(self.context, None)
         if lockable is not None:
             lockable.lock()
+        if redirect:
+            self.redirect()
 
-    def safe_unlock(self):
+    def safe_unlock(self, redirect=True):
         """Unlock the object if the current user has the lock
         """
         lockable = ILockable(self.context)
         if lockable.can_safely_unlock():
             lockable.unlock()
+        if redirect:
+            self.redirect()
 
-    def refresh_lock(self):
+    def refresh_lock(self, redirect=True):
         """Reset the lock start time
         """
         lockable = IRefreshableLockable(self.context, None)
         if lockable is not None:
             lockable.refresh_lock()
+        if redirect:
+            self.redirect()
 
 
 class LockingInformation(BrowserView):

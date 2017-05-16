@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.1.4 (unreleased)
+2.2.0 (unreleased)
 ------------------
 
 Breaking changes:
@@ -10,7 +10,8 @@ Breaking changes:
 
 New features:
 
-- *add item here*
+- All LockingOperations method can optionally redirect to the context view
+  [ale-rt]
 
 Bug fixes:
 

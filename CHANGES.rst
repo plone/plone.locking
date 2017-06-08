@@ -4,10 +4,6 @@ Changelog
 2.2.0 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
 New features:
 
 - All LockingOperations method can optionally redirect to the context view

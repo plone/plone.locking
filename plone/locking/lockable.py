@@ -50,7 +50,7 @@ class TTWLockable(object):
         if not self.locked():
             user = getSecurityManager().getUser()
             depth = children and 'infinity' or 0
-            lock = LockItem(user, depth=depth, timeout=lock_type.timeout * 60L)
+            lock = LockItem(user, depth=depth, timeout=lock_type.timeout * 60)
             token = lock.getLockToken()
             self.context._v_safe_write = True
             self.context.wl_setLock(token, lock)

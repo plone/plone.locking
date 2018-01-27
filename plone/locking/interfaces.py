@@ -6,8 +6,8 @@ from zope import schema
 # Lock types, including the default
 
 # Timeouts are expressed in minutes
-DEFAULT_TIMEOUT = 10L
-MAX_TIMEOUT = ((2L ** 32) - 1) / 60
+DEFAULT_TIMEOUT = 10
+MAX_TIMEOUT = ((2 ** 32) - 1) / 60
 
 
 class ILockType(Interface):

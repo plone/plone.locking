@@ -29,7 +29,7 @@ setup(name='plone.locking',
       zip_safe=False,
       extras_require=dict(
         test=[
-            'Products.Archetypes',
+            'plone.app.contenttypes',
             'plone.app.testing',
         ]
       ),

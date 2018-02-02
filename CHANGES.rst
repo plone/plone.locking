@@ -25,6 +25,9 @@ Bug fixes:
 - Add Python 2 / 3 compatibility
   [pbauer]
 
+- Update tests to not use plone.app.testing.bbb code.
+  This should avoid test isolation problems.
+  [gforcada]
 
 2.2 (2017-06-08)
 ----------------

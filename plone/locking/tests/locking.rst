@@ -1,25 +1,27 @@
+.. -*- coding: utf-8 -*-
+
+=====
 Tests
 =====
 
 Basic locking
--------------
+=============
 
-By default, this is enabled on any ITTWLockable object. By default, this
-applies to any Archetypes content object.
+    >>> from plone.app.testing import login
+    >>> from plone.app.testing import logout
+    >>> from plone.app.testing import setRoles
+    >>> from plone.locking.interfaces import ILockable
 
-   >>> portal = layer['portal']
+    >>> portal = layer['portal']
+    >>> login(portal, 'member1')
 
-   >>> addMember(portal, 'member1', 'Member one')
-   >>> addMember(portal, 'member2', 'Member two')
-   >>> from Products.Archetypes.BaseContent import BaseContent
-   >>> obj = BaseContent('id')
-   >>> from plone.app.testing import login, logout
-   >>> login(portal, 'member1')
+By default, this is enabled on any ITTWLockable object.
+
+    >>> obj = portal['doc']
 
 To lock this object, we adapt it to ILockable. The default adapter implements
 locking using WebDAV locks.
 
-   >>> from plone.locking.interfaces import ILockable
    >>> lockable = ILockable(obj)
 
 To begin with, this object will not be locked:

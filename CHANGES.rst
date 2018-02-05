@@ -4,14 +4,6 @@ Changelog
 2.2.2 (unreleased)
 ------------------
 
-Breaking changes:
-
-- *add item here*
-
-New features:
-
-- *add item here*
-
 Bug fixes:
 
 - Update tests to not use plone.app.testing.bbb code.

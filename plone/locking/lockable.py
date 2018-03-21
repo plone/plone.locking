@@ -7,7 +7,11 @@ from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 
 from AccessControl import getSecurityManager
-from webdav.LockItem import LockItem
+try:
+    from OFS.LockItem import LockItem
+except ImportError:
+    # Zope2
+    from webdav.LockItem import LockItem
 
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces import IEditingSchema

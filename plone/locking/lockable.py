@@ -1,5 +1,5 @@
 from zope.interface import implementer
-from zope.component import adapts, queryAdapter
+from zope.component import adapter, queryAdapter
 
 from persistent.dict import PersistentDict
 
@@ -32,11 +32,11 @@ except ImportError:
 ANNOTATION_KEY = 'plone.locking'
 
 
+@adapter(ITTWLockable)
 @implementer(IRefreshableLockable)
 class TTWLockable(object):
     """An object that is being locked through-the-web
     """
-    adapts(ITTWLockable)
 
     def __init__(self, context):
         self.context = context

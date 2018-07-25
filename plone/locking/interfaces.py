@@ -7,7 +7,7 @@ from zope import schema
 
 # Timeouts are expressed in minutes
 DEFAULT_TIMEOUT = 10
-MAX_TIMEOUT = ((2 ** 32) - 1) / 60
+MAX_TIMEOUT = ((2 ** 32) - 1) // 60
 
 
 class ILockType(Interface):

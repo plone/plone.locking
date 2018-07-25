@@ -141,8 +141,8 @@ class LockingInformation(BrowserView):
         days = int(round(now - DateTime(baseTime)))
         delta = timedelta(now - DateTime(baseTime))
         days = delta.days
-        hours = int(delta.seconds / 3600)
-        minutes = (delta.seconds - (hours * 3600)) / 60
+        hours = delta.seconds // 3600
+        minutes = (delta.seconds - (hours * 3600)) // 60
 
         dateString = u""
         if days == 0:

@@ -1,5 +1,5 @@
 from zope.interface import implementer
-from zope.component import adapts, queryAdapter
+from zope.component import adapter, queryAdapter
 
 from persistent.dict import PersistentDict
 
@@ -7,7 +7,11 @@ from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
 
 from AccessControl import getSecurityManager
-from webdav.LockItem import LockItem
+try:
+    from OFS.LockItem import LockItem
+except ImportError:
+    # Zope2
+    from webdav.LockItem import LockItem
 
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces import IEditingSchema
@@ -28,11 +32,11 @@ except ImportError:
 ANNOTATION_KEY = 'plone.locking'
 
 
+@adapter(ITTWLockable)
 @implementer(IRefreshableLockable)
 class TTWLockable(object):
     """An object that is being locked through-the-web
     """
-    adapts(ITTWLockable)
 
     def __init__(self, context):
         self.context = context
@@ -50,7 +54,8 @@ class TTWLockable(object):
         if not self.locked():
             user = getSecurityManager().getUser()
             depth = children and 'infinity' or 0
-            lock = LockItem(user, depth=depth, timeout=lock_type.timeout * 60)
+            timeout = int(lock_type.timeout * 60)
+            lock = LockItem(user, depth=depth, timeout=timeout)
             token = lock.getLockToken()
             self.context._v_safe_write = True
             self.context.wl_setLock(token, lock)

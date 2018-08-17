@@ -11,20 +11,11 @@ import doctest
 import unittest
 
 
-doctests = (
-    'locking.rst',
-)
-
-
-def add_member(portal, username):
-    portal_membership = getToolByName(portal, 'portal_membership')
-    portal_membership.addMember(username, 'secret', ('Member', ), [])
-
-
 def setup(doctest):
     portal = doctest.globs['layer']['portal']
-    add_member(portal, 'member1', )
-    add_member(portal, 'member2', )
+    portal_membership = getToolByName(portal, 'portal_membership')
+    portal_membership.addMember('member1', 'secret', ('Member', ), [])
+    portal_membership.addMember('member2', 'secret', ('Member', ), [])
 
     logout()
     login(portal, 'member1')
@@ -35,18 +26,15 @@ def setup(doctest):
 
 def test_suite():
     suite = unittest.TestSuite()
-    tests = [
+    suite.addTest(
         layered(
             doctest.DocFileSuite(
-                'tests/{0}'.format(test_file),
+                'tests/locking.rst',
                 package='plone.locking',
                 optionflags=optionflags,
                 setUp=setup,
             ),
             layer=PLONE_LOCKING_FUNCTIONAL_TESTING,
         )
-        for test_file in doctests
-    ]
-    suite.addTests(tests)
+    )
     return suite
-

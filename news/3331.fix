@@ -1,0 +1,2 @@
+Register a fallback @@plone_lock_info view to allow objects without plone.locking behavior to be edited.
+[ericof]

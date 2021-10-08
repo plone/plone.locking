@@ -161,3 +161,23 @@ class LockingInformation(BrowserView):
             else:
                 dateString = _(u"$d days and $h hours", mapping={'d': days, 'h': hours})
         return dateString
+
+
+class LockingInformationFallback(BrowserView):
+    """Fallback view for Lock information.
+
+    This view exists to return sensible defaults if a content type does
+    not have the plone.locking behavior active.
+    """
+
+    def is_locked(self):
+        return False
+
+    def is_locked_for_current_user(self):
+        return False
+
+    def lock_is_stealable(self):
+        return False
+
+    def lock_info(self):
+        return None

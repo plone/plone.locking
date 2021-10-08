@@ -22,4 +22,12 @@
         allowed_attributes="is_locked is_locked_for_current_user lock_is_stealable lock_info"
         />
 
+    <browser:page
+        for="*"
+        name="plone_lock_info"
+        class=".browser.locking.LockingInformationFallback"
+        permission="zope2.View"
+        allowed_attributes="is_locked is_locked_for_current_user lock_is_stealable lock_info"
+        />
+
 </configure>

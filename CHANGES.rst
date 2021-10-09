@@ -8,6 +8,16 @@ Changelog
 
 .. towncrier release notes start
 
+2.2.5 (2021-10-09)
+------------------
+
+Bug fixes:
+
+
+- Register a fallback @@plone_lock_info view to allow objects without plone.locking behavior to be edited.
+  [ericof] (#3331)
+
+
 2.2.4 (2020-04-20)
 ------------------
 

@@ -2,11 +2,12 @@
      i18n:domain="plone"
      tal:define="locked view/info/is_locked_for_current_user;
                  stealable view/lock_is_stealable;
-                 lock_details view/lock_info;">
+                 lock_details view/lock_info;
+                 icons python:context.restrictedTraverse('@@iconresolver')">
   <tal:block condition="locked">
-    <dl class="portalMessage info">
-      <dt i18n:translate="label_locked">Locked</dt>
-      <dd>
+    <div class="portalMessage info alert alert-info">
+    <tal:icon tal:replace="structure python:icons.tag('lock-fill', tag_alt='locked', tag_class='mb-1 me-2')" />
+      <strong i18n:translate="label_locked">Locked</strong>
         <tal:author-page
             tal:condition="lock_details/author_page"
             i18n:translate="description_webdav_locked_by_author_on_time">
@@ -39,7 +40,6 @@
             the object. You will then be able to edit it.
           </span>
         </form>
-      </dd>
-    </dl>
+    </div>
   </tal:block>
 </div>

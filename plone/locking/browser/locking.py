@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 from Acquisition import aq_inner
-from DateTime import DateTime
 from datetime import timedelta
+from DateTime import DateTime
 from plone.locking.interfaces import ILockable
 from plone.locking.interfaces import IRefreshableLockable
 from plone.registry.interfaces import IRegistry
@@ -11,22 +10,19 @@ from zope.component import getUtility
 from zope.i18nmessageid import MessageFactory
 
 
-_ = MessageFactory('plone')
+_ = MessageFactory("plone")
 
 
 class LockingOperations(BrowserView):
-    """Lock acquisition and stealing operations
-    """
+    """Lock acquisition and stealing operations"""
 
     def redirect(self):
-        """Redirect to the context view if needed
-        """
+        """Redirect to the context view if needed"""
         url = self.context.absolute_url()
         registry = getUtility(IRegistry)
-        types_use_view = registry.get(
-            'plone.types_use_view_action_in_listings', [])
+        types_use_view = registry.get("plone.types_use_view_action_in_listings", [])
         if self.context.portal_type in types_use_view:
-            url += '/view'
+            url += "/view"
         self.request.RESPONSE.redirect(url)
 
     def force_unlock(self, redirect=True):
@@ -41,8 +37,7 @@ class LockingOperations(BrowserView):
             self.redirect()
 
     def create_lock(self, redirect=True):
-        """Lock the object if it is unlocked
-        """
+        """Lock the object if it is unlocked"""
         lockable = IRefreshableLockable(self.context, None)
         if lockable is not None:
             lockable.lock()
@@ -50,8 +45,7 @@ class LockingOperations(BrowserView):
             self.redirect()
 
     def safe_unlock(self, redirect=True):
-        """Unlock the object if the current user has the lock
-        """
+        """Unlock the object if the current user has the lock"""
         lockable = ILockable(self.context)
         if lockable.can_safely_unlock():
             lockable.unlock()
@@ -59,8 +53,7 @@ class LockingOperations(BrowserView):
             self.redirect()
 
     def refresh_lock(self, redirect=True):
-        """Reset the lock start time
-        """
+        """Reset the lock start time"""
         lockable = IRefreshableLockable(self.context, None)
         if lockable is not None:
             lockable.refresh_lock()
@@ -69,8 +62,7 @@ class LockingOperations(BrowserView):
 
 
 class LockingInformation(BrowserView):
-    """Lock information
-    """
+    """Lock information"""
 
     def is_locked(self):
         lockable = ILockable(aq_inner(self.context))
@@ -87,8 +79,7 @@ class LockingInformation(BrowserView):
         # return lockable.locked() and not lockable.can_safely_unlock()
 
     def lock_is_stealable(self):
-        """Find out if the lock is stealable
-        """
+        """Find out if the lock is stealable"""
         lockable = ILockable(self.context)
         return lockable.stealable()
 
@@ -103,37 +94,36 @@ class LockingInformation(BrowserView):
         acquired.
         """
 
-        portal_membership = getToolByName(self.context, 'portal_membership')
-        portal_url = getToolByName(self.context, 'portal_url')
+        portal_membership = getToolByName(self.context, "portal_membership")
+        portal_url = getToolByName(self.context, "portal_url")
         lockable = ILockable(aq_inner(self.context))
         url = portal_url()
         for info in lockable.lock_info():
-            creator = info['creator']
-            time = info['time']
-            token = info['token']
-            lock_type = info['type']
+            creator = info["creator"]
+            time = info["time"]
+            token = info["token"]
+            lock_type = info["type"]
             # Get the fullname, but remember that the creator may not
             # be a member, but only Authenticated or even anonymous.
             # Same for the author_page
-            fullname = ''
-            author_page = ''
+            fullname = ""
+            author_page = ""
             member = portal_membership.getMemberById(creator)
             if member:
-                fullname = member.getProperty('fullname', '')
-                author_page = "%s/author/%s" % (url, creator)
-            if fullname == '':
-                fullname = creator or _('label_an_anonymous_user',
-                                        u'an anonymous user')
+                fullname = member.getProperty("fullname", "")
+                author_page = f"{url}/author/{creator}"
+            if fullname == "":
+                fullname = creator or _("label_an_anonymous_user", "an anonymous user")
             time_difference = self._getNiceTimeDifference(time)
 
             return {
-                'creator': creator,
-                'fullname': fullname,
-                'author_page': author_page,
-                'time': time,
-                'time_difference': time_difference,
-                'token': token,
-                'type': lock_type,
+                "creator": creator,
+                "fullname": fullname,
+                "author_page": author_page,
+                "time": time,
+                "time_difference": time_difference,
+                "token": token,
+                "type": lock_type,
             }
 
     def _getNiceTimeDifference(self, baseTime):
@@ -144,22 +134,26 @@ class LockingInformation(BrowserView):
         hours = delta.seconds // 3600
         minutes = (delta.seconds - (hours * 3600)) // 60
 
-        dateString = u""
+        dateString = ""
         if days == 0:
             if hours == 0:
                 if delta.seconds < 120:
-                    dateString = _(u"1 minute")
+                    dateString = _("1 minute")
                 else:
-                    dateString = _(u"$m minutes", mapping={'m': minutes})
+                    dateString = _("$m minutes", mapping={"m": minutes})
             elif hours == 1:
-                dateString = _(u"$h hour and $m minutes", mapping={'h': hours, 'm': minutes})  # noqa
+                dateString = _(
+                    "$h hour and $m minutes", mapping={"h": hours, "m": minutes}
+                )  # noqa
             else:
-                dateString = _(u"$h hours and $m minutes", mapping={'h': hours, 'm': minutes})  # noqa
+                dateString = _(
+                    "$h hours and $m minutes", mapping={"h": hours, "m": minutes}
+                )  # noqa
         else:
             if days == 1:
-                dateString = _(u"$d day and $h hours", mapping={'d': days, 'h': hours})
+                dateString = _("$d day and $h hours", mapping={"d": days, "h": hours})
             else:
-                dateString = _(u"$d days and $h hours", mapping={'d': days, 'h': hours})
+                dateString = _("$d days and $h hours", mapping={"d": days, "h": hours})
         return dateString
 
 

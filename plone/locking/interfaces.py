@@ -1,53 +1,60 @@
-from zope.interface import implementer, Interface, Attribute
-from zope.annotation.interfaces import IAttributeAnnotatable
-
 from zope import schema
+from zope.annotation.interfaces import IAttributeAnnotatable
+from zope.interface import Attribute
+from zope.interface import implementer
+from zope.interface import Interface
+
 
 # Lock types, including the default
 
 # Timeouts are expressed in minutes
 DEFAULT_TIMEOUT = 10
-MAX_TIMEOUT = ((2 ** 32) - 1) // 60
+MAX_TIMEOUT = ((2**32) - 1) // 60
 
 
 class ILockType(Interface):
-    """Representation of a type of lock
-    """
+    """Representation of a type of lock"""
 
-    __name__ = schema.TextLine(title=u"Name",
-                               description=u"The unique name of the lock type")
+    __name__ = schema.TextLine(
+        title="Name", description="The unique name of the lock type"
+    )
 
-    stealable = schema.Bool(title=u"Stealable",
-                            description=u"Whether this type of lock is stealable")
-    user_unlockable = schema.Bool(title=u"User unlockable",
-                                  description=u"Whether this type of lock should be unlockable immediately")
-    timeout = schema.Int(title=u"lock timeout",
-                         description=u"Locking timeout in minutes")
+    stealable = schema.Bool(
+        title="Stealable", description="Whether this type of lock is stealable"
+    )
+    user_unlockable = schema.Bool(
+        title="User unlockable",
+        description="Whether this type of lock should be unlockable immediately",
+    )
+    timeout = schema.Int(title="lock timeout", description="Locking timeout in minutes")
 
 
 @implementer(ILockType)
-class LockType(object):
-
+class LockType:
     def __init__(self, name, stealable, user_unlockable, timeout=DEFAULT_TIMEOUT):
         self.__name__ = name
         self.stealable = stealable
         self.user_unlockable = user_unlockable
         self.timeout = timeout
 
-STEALABLE_LOCK = LockType(u"plone.locking.stealable", stealable=True, user_unlockable=True)
+
+STEALABLE_LOCK = LockType(
+    "plone.locking.stealable", stealable=True, user_unlockable=True
+)
 
 # Marker interfaces
 
+
 class ITTWLockable(IAttributeAnnotatable):
-    """Marker interface for objects that are lockable through-the-web
-    """
+    """Marker interface for objects that are lockable through-the-web"""
 
 
 class INonStealableLock(Interface):
-    """Mark an object with this interface to make locks be non-stealable.
-    """
+    """Mark an object with this interface to make locks be non-stealable."""
+
 
 # Functionality
+
 
 class ILockable(Interface):
     """A component that is lockable.
@@ -57,7 +64,7 @@ class ILockable(Interface):
     that can be stolen (unless the object is marked with INonStealableLock).
 
     Most operations take the type as a parameter and operate on the lock token
-    assocaited with a particular type.
+    associated with a particular type.
     """
 
     def lock(lock_type=STEALABLE_LOCK, children=False):
@@ -75,12 +82,10 @@ class ILockable(Interface):
         """
 
     def clear_locks():
-        """Clear all locks on the object
-        """
+        """Clear all locks on the object"""
 
     def locked():
-        """True if the object is locked with any lock.
-        """
+        """True if the object is locked with any lock."""
 
     def can_safely_unlock(lock_type=STEALABLE_LOCK):
         """Determine if the current user can safely attempt to unlock the
@@ -120,17 +125,18 @@ class ILockable(Interface):
 
 
 class IRefreshableLockable(ILockable):
-    """ A component that is lockable and whose locks can be refreshed.
-    """
+    """A component that is lockable and whose locks can be refreshed."""
 
     def refresh_lock(lock_type=STEALABLE_LOCK):
-        """Refresh the lock so it expires later.
-        """
+        """Refresh the lock so it expires later."""
+
 
 # Configuration
 
+
 class ILockSettings(Interface):
-    """A component that looks up configuration settings for lock behavior.
-    """
-    lock_on_ttw_edit = Attribute('A property that reveals whether '
-                                 'through-the-web locking is enabled.')
+    """A component that looks up configuration settings for lock behavior."""
+
+    lock_on_ttw_edit = Attribute(
+        "A property that reveals whether " "through-the-web locking is enabled."
+    )

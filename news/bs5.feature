@@ -1,1 +1,2 @@
-Update the info viewlet to Bootstrap5 [ewohnlich]
+Update the info viewlet css classes to Bootstrap 5.
+[ewohnlich]

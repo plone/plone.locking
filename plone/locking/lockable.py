@@ -1,42 +1,42 @@
-from zope.interface import implementer
-from zope.component import adapter, queryAdapter
-
-from persistent.dict import PersistentDict
-
-from zope.annotation.interfaces import IAnnotations
-from zope.component import getUtility
-
 from AccessControl import getSecurityManager
+from persistent.dict import PersistentDict
+from zope.annotation.interfaces import IAnnotations
+from zope.component import adapter
+from zope.component import getUtility
+from zope.component import queryAdapter
+from zope.interface import implementer
+
+
 try:
     from OFS.LockItem import LockItem
 except ImportError:
     # Zope2
     from webdav.LockItem import LockItem
 
+from plone.locking.interfaces import ILockSettings
+from plone.locking.interfaces import INonStealableLock
+from plone.locking.interfaces import IRefreshableLockable
+from plone.locking.interfaces import ITTWLockable
+from plone.locking.interfaces import STEALABLE_LOCK
 from plone.registry.interfaces import IRegistry
 from Products.CMFPlone.interfaces import IEditingSchema
 
-from plone.locking.interfaces import IRefreshableLockable
-from plone.locking.interfaces import INonStealableLock
-from plone.locking.interfaces import ITTWLockable
-from plone.locking.interfaces import STEALABLE_LOCK
-from plone.locking.interfaces import ILockSettings
 
 try:
     from plone.protect.auto import safeWrite
 except ImportError:
+
     def safeWrite(*args):
         pass
 
 
-ANNOTATION_KEY = 'plone.locking'
+ANNOTATION_KEY = "plone.locking"
 
 
 @adapter(ITTWLockable)
 @implementer(IRefreshableLockable)
-class TTWLockable(object):
-    """An object that is being locked through-the-web
-    """
+class TTWLockable:
+    """An object that is being locked through-the-web"""
 
     def __init__(self, context):
         self.context = context
@@ -46,14 +46,13 @@ class TTWLockable(object):
         settings = queryAdapter(self.context, ILockSettings)
         if settings is None:
             registry = getUtility(IRegistry)
-            settings = registry.forInterface(IEditingSchema,
-                                             prefix='plone')
+            settings = registry.forInterface(IEditingSchema, prefix="plone")
         if settings is not None and settings.lock_on_ttw_edit is False:
             return
 
         if not self.locked():
             user = getSecurityManager().getUser()
-            depth = children and 'infinity' or 0
+            depth = children and "infinity" or 0
             timeout = int(lock_type.timeout * 60)
             lock = LockItem(user, depth=depth, timeout=timeout)
             token = lock.getLockToken()
@@ -71,18 +70,17 @@ class TTWLockable(object):
 
         key = self._locks().get(lock_type.__name__, None)
         if key:
-            lock = self.context.wl_getLock(key['token'])
+            lock = self.context.wl_getLock(key["token"])
             lock.refresh()
 
     def unlock(self, lock_type=STEALABLE_LOCK, stealable_only=True):
         if not self.locked():
             return
 
-        if not lock_type.stealable or not stealable_only \
-           or self.stealable(lock_type):
+        if not lock_type.stealable or not stealable_only or self.stealable(lock_type):
             key = self._locks().get(lock_type.__name__, None)
             if key:
-                self.context.wl_delLock(key['token'])
+                self.context.wl_delLock(key["token"])
                 del self._locks()[lock_type.__name__]
 
     def clear_locks(self):
@@ -99,19 +97,21 @@ class TTWLockable(object):
         if not lock_type.user_unlockable:
             return False
 
-        info = self.lock_info()
+        lock_info = self.lock_info()
         # There is no lock, so return True
-        if len(info) == 0:
+        if len(lock_info) == 0:
             return True
 
         userid = getSecurityManager().getUser().getId() or None
-        for l in info:
+        for info in lock_info:
             # There is another lock of a different type
-            if not hasattr(l['type'], '__name__') or \
-               l['type'].__name__ != lock_type.__name__:
+            if (
+                not hasattr(info["type"], "__name__")
+                or info["type"].__name__ != lock_type.__name__
+            ):
                 return False
             # The lock is in fact held by the current user
-            if l['creator'] == userid:
+            if info["creator"] == userid:
                 return True
         return False
 
@@ -120,9 +120,11 @@ class TTWLockable(object):
         if not lock_type.stealable:
             return False
         # Can't steal locks of a different type
-        for l in self.lock_info():
-            if not hasattr(l['type'], '__name__') or \
-               l['type'].__name__ != lock_type.__name__:
+        for info in self.lock_info():
+            if (
+                not hasattr(info["type"], "__name__")
+                or info["type"].__name__ != lock_type.__name__
+            ):
                 return False
         # The lock type is stealable, and the object is not marked as
         # non-stelaable, so return True
@@ -134,7 +136,7 @@ class TTWLockable(object):
 
     def lock_info(self):
         info = []
-        rtokens = dict([(v['token'], v['type']) for v in self._locks(False).values()])
+        rtokens = {v["token"]: v["type"] for v in self._locks(False).values()}
         jar = self.context._p_jar
         if jar is not None:
             isReadOnly = jar.isReadOnly()
@@ -150,12 +152,14 @@ class TTWLockable(object):
             # creator can be None when locked by an anonymous user
             if creator is not None:
                 creator = creator[1]
-            info.append({
-                'creator': creator,
-                'time': lock.getModifiedTime(),
-                'token': token,
-                'type': rtokens.get(token, None),
-            })
+            info.append(
+                {
+                    "creator": creator,
+                    "time": lock.getModifiedTime(),
+                    "token": token,
+                    "type": rtokens.get(token, None),
+                }
+            )
         return info
 
     def _locks(self, create=True):

@@ -1,17 +1,15 @@
-# -*- coding: utf-8 -*-
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
+from plone.dexterity.interfaces import IDexterityFTI
 from plone.locking.browser.locking import LockingInformation
 from plone.locking.browser.locking import LockingInformationFallback
 from plone.locking.testing import PLONE_LOCKING_INTEGRATION_TESTING
-from plone.dexterity.interfaces import IDexterityFTI
 from zope.component import queryUtility
 
 import unittest
 
 
 class TestLockInfoViewWithoutLocking(unittest.TestCase):
-
     layer = PLONE_LOCKING_INTEGRATION_TESTING
 
     view = "@@plone_lock_info"

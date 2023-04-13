@@ -1,10 +1,8 @@
-from zope.interface import implementer
-from zope.component import getMultiAdapter
-
-from zope.viewlet.interfaces import IViewlet
-
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.component import getMultiAdapter
+from zope.interface import implementer
+from zope.viewlet.interfaces import IViewlet
 
 
 @implementer(IViewlet)
@@ -15,10 +13,10 @@ class LockInfoViewlet(BrowserView):
     an implementation of the info box in a single place.
     """
 
-    template = ViewPageTemplateFile('info.pt')
+    template = ViewPageTemplateFile("info.pt")
 
     def __init__(self, context, request, view, manager):
-        super(LockInfoViewlet, self).__init__(context, request)
+        super().__init__(context, request)
         self.__parent__ = view
         self.context = context
         self.request = request

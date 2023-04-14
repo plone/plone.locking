@@ -38,6 +38,7 @@ setup(
         test=[
             "plone.app.contenttypes",
             "plone.app.testing",
+            "plone.app.robotframework",
         ]
     ),
     install_requires=[

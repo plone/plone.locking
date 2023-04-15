@@ -36,22 +36,14 @@ setup(
     python_requires=">=3.8",
     extras_require=dict(
         test=[
-            "plone.app.contenttypes",
+            "plone.app.contenttypes[test]",
             "plone.app.testing",
+            "plone.dexterity",
+            "plone.testing",
         ]
     ),
     install_requires=[
         "setuptools",
-        "zope.annotation",
-        "zope.component",
-        "zope.i18nmessageid",
-        "zope.interface",
-        "zope.schema",
-        "zope.viewlet",
-        "Acquisition",
-        "DateTime",
-        "Products.CMFCore",
-        "ZODB",
-        "Zope",
+        "plone.base",
     ],
 )

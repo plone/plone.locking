@@ -13,13 +13,13 @@ except ImportError:
     # Zope2
     from webdav.LockItem import LockItem
 
+from plone.base.interfaces import IEditingSchema
 from plone.locking.interfaces import ILockSettings
 from plone.locking.interfaces import INonStealableLock
 from plone.locking.interfaces import IRefreshableLockable
 from plone.locking.interfaces import ITTWLockable
 from plone.locking.interfaces import STEALABLE_LOCK
 from plone.registry.interfaces import IRegistry
-from Products.CMFPlone.interfaces import IEditingSchema
 
 
 try:

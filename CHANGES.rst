@@ -8,6 +8,29 @@ Changelog
 
 .. towncrier release notes start
 
+3.0.0 (2023-04-16)
+------------------
+
+Breaking changes:
+
+
+- Drop python 2.7. (#1)
+
+
+New features:
+
+
+- Update the info viewlet css classes to Bootstrap 5.
+  [ewohnlich] (bs5)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs] (234bb1d6, 5cc689e5)
+
+
 2.3.0 (2023-02-08)
 ------------------
 

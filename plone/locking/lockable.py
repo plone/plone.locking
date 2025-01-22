@@ -1,5 +1,5 @@
 from AccessControl import getSecurityManager
-from persistent.dict import PersistentDict
+from persistent.mapping import PersistentMapping
 from zope.annotation.interfaces import IAnnotations
 from zope.component import adapter
 from zope.component import getUtility
@@ -169,7 +169,7 @@ class TTWLockable:
         annotations = IAnnotations(self.context)
         locks = annotations.get(ANNOTATION_KEY, None)
         if locks is None and create:
-            locks = annotations.setdefault(ANNOTATION_KEY, PersistentDict())
+            locks = annotations.setdefault(ANNOTATION_KEY, PersistentMapping())
 
         try:
             safeWrite(annotations.obj.__annotations__)

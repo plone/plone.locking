@@ -8,6 +8,23 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0a1 (2025-09-10)
+--------------------
+
+Breaking changes:
+
+
+- Moved ``plone.locking.browser.info.LockInfoViewlet`` template to ``plone.app.layout.viewlets``.
+  [cihanandac] (#3953)
+
+
+Internal:
+
+
+- Update configuration files.
+  [plone devs]
+
+
 3.0.2 (2025-01-24)
 ------------------
 

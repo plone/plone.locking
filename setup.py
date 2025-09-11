@@ -1,14 +1,20 @@
+from pathlib import Path
 from setuptools import find_packages
 from setuptools import setup
 
 
 version = "4.0.0a2.dev0"
 
+long_description = (
+    f"{Path('README.rst').read_text()}\n{Path('CHANGES.rst').read_text()}\n"
+)
+
 setup(
     name="plone.locking",
     version=version,
     description="webdav locking support",
-    long_description=open("README.rst").read() + "\n" + open("CHANGES.rst").read(),
+    long_description=long_description,
+    long_description_content_type="text/x-rst",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
@@ -29,8 +35,9 @@ setup(
     author_email="plone-developers@lists.sourceforge.net",
     url="https://pypi.org/project/plone.locking",
     license="GPL version 2",
-    packages=find_packages(),
+    packages=find_packages("src"),
     namespace_packages=["plone"],
+    package_dir={"": "src"},
     include_package_data=True,
     zip_safe=False,
     python_requires=">=3.8",

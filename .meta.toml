@@ -10,5 +10,4 @@ dependencies_ignores = "['plone.protect', 'z3c.jbot']"
 
 [tox]
 constraints_file = "https://dist.plone.org/release/6.2-dev/constraints.txt"
-test_matrix = {"6.2" = ["3.13", "3.10"]}
-
+test_matrix = {"6.2" = ["*"]}

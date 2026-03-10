@@ -1,6 +1,5 @@
 from plone.locking.interfaces import ILockable
 
-
 # These event handlers are not connected by default, but can be used for
 # a particular object event (used e.g. in Archetypes)
 

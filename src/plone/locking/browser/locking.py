@@ -9,7 +9,6 @@ from Products.Five import BrowserView
 from zope.component import getUtility
 from zope.i18nmessageid import MessageFactory
 
-
 _ = MessageFactory("plone")
 
 

@@ -4,7 +4,6 @@ from zope.interface import Attribute
 from zope.interface import implementer
 from zope.interface import Interface
 
-
 # Lock types, including the default
 
 # Timeouts are expressed in minutes

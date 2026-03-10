@@ -6,7 +6,6 @@ from zope.component import getUtility
 from zope.component import queryAdapter
 from zope.interface import implementer
 
-
 try:
     from OFS.LockItem import LockItem
 except ImportError:
@@ -20,7 +19,6 @@ from plone.locking.interfaces import IRefreshableLockable
 from plone.locking.interfaces import ITTWLockable
 from plone.locking.interfaces import STEALABLE_LOCK
 from plone.registry.interfaces import IRegistry
-
 
 try:
     from plone.protect.auto import safeWrite

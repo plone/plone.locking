@@ -46,7 +46,6 @@ setup(
         ]
     ),
     install_requires=[
-        "setuptools",
         "plone.base",
         "Zope",
     ],
